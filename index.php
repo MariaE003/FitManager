@@ -1,3 +1,12 @@
+
+<?php
+require "connect.php";
+//  echo "hi";
+// $insert="INSERT INTO cours(nom, catégorie, dateCours, heure, duree, nombreMaxParticipants) values('abc','abcCat','2003-06-12','11',1,15)";
+// $connet->exec($insert);
+// echo "test"
+
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
