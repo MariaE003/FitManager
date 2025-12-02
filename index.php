@@ -215,36 +215,34 @@ require "connect.php";
                             if ($data > 0) {
                                 foreach ($data as $cours) {
                                     // echo $cours['nom'] . "<br>";
-                                    $time=$cours["heure"];
-                                    $heurMinute=date("H:i",strtotime($time));
+                                    $time = $cours["heure"];
+                                    $heurMinute = date("H:i", strtotime($time));
                                     ?>
-                                    
+
                                     <tr class="border-b hover:bg-gray-50">
-                                <td class="px-4 py-4 text-gray-600"><?php echo $cours["nom"]?></td>
-                                <td class="px-4 py-4">
-                                    <span
-                                        class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium"><?php echo $cours["catégorie"] ?></span>
-                                </td>
-                                <td class="px-4 py-4 text-gray-600"><?php echo $cours["dateCours"] ?></td>
-                                <td class="px-4 py-4 text-gray-600"><?php echo $heurMinute?></td>
-                                <td class="px-4 py-4 text-gray-600"><?php echo $cours["duree"] ?></td>
-                                <td class="px-4 py-4 text-gray-600"><?php echo $cours["nombreMaxParticipants"] ?></td>
-                                <td class="px-4 py-4">
-                                    <div class="flex gap-2">
-                                        <button
-                                            class="px-4 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition">Modifier</button>
-                                        <button
-                                            class="px-4 py-1 bg-red-500 text-white rounded-lg hover:bg-red-400 transition">Supprimer</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <?php
+                                        <td class="px-4 py-4 text-gray-600"><?php echo $cours["nom"] ?></td>
+                                        <td class="px-4 py-4">
+                                            <span
+                                                class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium"><?php echo $cours["catégorie"] ?></span>
+                                        </td>
+                                        <td class="px-4 py-4 text-gray-600"><?php echo $cours["dateCours"] ?></td>
+                                        <td class="px-4 py-4 text-gray-600"><?php echo $heurMinute ?></td>
+                                        <td class="px-4 py-4 text-gray-600"><?php echo $cours["duree"] ?></td>
+                                        <td class="px-4 py-4 text-gray-600"><?php echo $cours["nombreMaxParticipants"] ?></td>
+                                        <td class="px-4 py-4">
+                                            <div class="flex gap-2">
+                                                <button
+                                                    class="px-4 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition">Modifier</button>
+                                                <button
+                                                    class="px-4 py-1 bg-red-500 text-white rounded-lg hover:bg-red-400 transition">Supprimer</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php
                                 }
                             } else {
                                 echo "aucun cours trouve";
                             }
-
-
                             ?>
                         </tbody>
                     </table>
@@ -277,24 +275,39 @@ require "connect.php";
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="border-b hover:bg-gray-50">
-                                <td class="px-4 py-4 text-gray-600">Tapis de Course Pro</td>
-                                <td class="px-4 py-4 text-gray-600">Cardio</td>
-                                <td class="px-4 py-4 text-gray-600">10</td>
-                                <td class="px-4 py-4">
-                                    <span
-                                        class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">Bon</span>
-                                </td>
-                                <td class="px-4 py-4">
-                                    <div class="flex gap-2">
-                                        <button
-                                            class="px-4 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition">Modifier</button>
-                                        <button
-                                            class="px-4 py-1 bg-red-500 text-white rounded-lg hover:bg-red-400 transition">Supprimer</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="border-b hover:bg-gray-50">
+                            <?php
+                            $test = "SELECT * FROM equipements";
+                            $abc = $connet->query($test);
+                            $data = $abc->fetchAll(PDO::FETCH_ASSOC);
+                            if ($data > 0) {
+                                foreach ($data as $qui) {
+                                    // echo $cours['nom'] . "<br>";
+                                    ?>
+                                    <tr class="border-b hover:bg-gray-50">
+                                        <td class="px-4 py-4 text-gray-600"><?php echo $qui["nom"] ?></td>
+                                        <td class="px-4 py-4 text-gray-600"><?php echo $qui["type"] ?></td>
+                                        <td class="px-4 py-4 text-gray-600"><?php echo $qui["quantiteDispo"] ?></td>
+                                        <td class="px-4 py-4">
+                                            <span
+                                                class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium"><?php echo $qui["etat"]?></span>
+                                        </td>
+                                        <td class="px-4 py-4">
+                                            <div class="flex gap-2">
+                                                <button
+                                                    class="px-4 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition">Modifier</button>
+                                                <button
+                                                    class="px-4 py-1 bg-red-500 text-white rounded-lg hover:bg-red-400 transition">Supprimer</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <?php
+                                }
+                            } else {
+                                echo "aucun cours trouve";
+                            }
+                            ?>
+                            <!--  <tr class="border-b hover:bg-gray-50">
                                 <td class="px-4 py-4 text-gray-600">Haltères 10kg</td>
                                 <td class="px-4 py-4 text-gray-600">Musculation</td>
                                 <td class="px-4 py-4 text-gray-600">25</td>
@@ -327,7 +340,7 @@ require "connect.php";
                                             class="px-4 py-1 bg-red-500 text-white rounded-lg hover:bg-red-400 transition">Supprimer</button>
                                     </div>
                                 </td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                     </table>
                 </div>
@@ -391,22 +404,26 @@ require "connect.php";
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">Date *</label>
                         <input type="date" required
-                            class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary" name="date">
+                            class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary"
+                            name="date">
                     </div>
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">Heure *</label>
                         <input type="time" required
-                            class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary" name="heure">
+                            class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary"
+                            name="heure">
                     </div>
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">Durée (minutes) *</label>
                         <input type="number" placeholder="60" required
-                            class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary" name="durre">
+                            class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary"
+                            name="durre">
                     </div>
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">Participants Max *</label>
                         <input type="number" placeholder="20" required
-                            class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary" name="MaxParticipant">
+                            class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary"
+                            name="MaxParticipant">
                     </div>
                 </div>
                 <div class="mt-6 text-right">
