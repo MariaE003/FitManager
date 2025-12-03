@@ -58,13 +58,36 @@ if (isset($_POST["EnregistrerEqui"])) {
 
 // supprimer un cours
 if(isset($_GET['id'])){
-echo "id clicabe : ".$_GET['id'];
+// echo "id clicabe : ".$_GET['id'];
 $id=$_GET['id'];
 $sqlDelete="DELETE FROM cours WHERE id=$id";
 if ($connet->query($sqlDelete)) {
-    echo "supprision reusite de id du cours ".$_GET['id'];
+    // echo "supprision reusite de id du cours ".$_GET['id'];
 }
 }
+
+// supprimer un equipement
+if(isset($_GET['idEqui'])){
+// echo "id clicabe : ".$_GET['idEqui'];
+$idEqui=$_GET['idEqui'];
+$sqlDeleteEqui="DELETE FROM equipements WHERE id=$idEqui";
+if ($connet->query($sqlDeleteEqui)) {
+    // echo "supprision reusite de id du cours ".$idEqui;
+}
+}
+
+// modifier un cous
+
+// if(isset($_GET['id'])){
+// // echo "id clicabe : ".$_GET['id'];
+// $id=$_GET['id'];
+// $sqlDelete="SELECT * FROM cours WHERE id=$id";
+// if ($connet->query($sqlDelete)) {
+//     echo $sqlDelete;
+//     // echo "supprision reusite de id du cours ".$_GET['id'];
+// }
+// }
+
 
 ?>
 
@@ -376,9 +399,9 @@ if ($connet->query($sqlDelete)) {
                                         </td>
                                         <td class="px-4 py-4">
                                             <div class="flex gap-2">
-                                                <a href="index.php?id=<?php echo $cours['id']?>"
+                                                <a href="index.php?idEqui=<?php echo $qui['id']?>"
                                                     class="px-4 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition modifierEqui">Modifier</a>
-                                                <a href="index.php?id=<?php echo $cours['id']?>"
+                                                <a href="index.php?idEqui=<?php echo $qui['id']?>"
                                                     class="px-4 py-1 bg-red-500 text-white rounded-lg hover:bg-red-400 transition suuprimerEqui">Supprimer</a>
                                             </div>
                                         </td>
