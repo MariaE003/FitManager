@@ -26,7 +26,7 @@ FOREIGN KEY (idE) REFERENCES equipements(id)
 )
 
 -- 
-
+1
 ALTER TABLE cours_equipements ADD CONSTRAINT FOREIGN KEY (idC) REFERENCES cours(id);
 
 -- supprimer la contrainte

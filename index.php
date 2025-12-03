@@ -5,9 +5,35 @@ require "connect.php";
 // $connet->exec($insert);
 // echo "test"
 ?>
+
+
+<?php
+if (isset($_POST["Enregistrer"])) {
+    if (!empty($_POST["nomCours"]) && !empty($_POST["categorieCours"]) && !empty($_POST["dateCours"])&& !empty($_POST["heureCours"]) && !empty($_POST["durreCours"]) && !empty($_POST["MaxParticipantCours"]) ){
+        $nom=$_POST["nomCours"];
+        $categorieCours=$_POST["categorieCours"];
+        $dateCours=$_POST["dateCours"];
+        $heureCours=$_POST["heureCours"];
+        $durreCours=$_POST["durreCours"];
+        $MaxParticipantCours=$_POST["MaxParticipantCours"];
+        // echo $nom;
+    //   echo "les champ sont obligatoire";
+    //   echo "nadddddiiiia";
+    $sql="INSERT INTO cours(nom,catégorie,dateCours,heure,duree,nombreMaxParticipants) VALUES('$nom','$categorieCours','$dateCours','$heureCours','$durreCours','$MaxParticipantCours')";
+    // echo $nom ,$categorieCours , $dateCours,$heureCours,$durreCours,$MaxParticipantCours;
+
+    // $abd=$connet->query($sql);
+    if ($connet->query($sql) === true) {
+        // echo "la insertion  reussite";
+        header("Location:index.php");
+        exit();
+    }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -185,6 +211,11 @@ require "connect.php";
             <div class="bg-white p-8 rounded-xl shadow border">
                 <div class="flex justify-between items-center mb-6 pb-4 border-b-2 border-gray-100">
                     <h2 class="text-3xl font-bold text-primary">Gestion des Cours</h2>
+                    <div class="flex flex-col">
+                       <!-- <label class="mb-2 text-gray-600 font-medium text-sm">Nom du Cours *</label> -->
+                       <input type="text" placeholder="nom du cours" required name="nomcoursSearch"
+                           class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
+                   </div>
                     <button onclick="openModal('coursModal')"
                         class="px-6 py-3 bg-primary text-white rounded-lg transition-all hover:bg-secondary">
                         ➕ Ajouter un Cours
@@ -210,8 +241,16 @@ require "connect.php";
                         <tbody>
                             <?php
                             $test = "SELECT * FROM cours";
+
                             $abc = $connet->query($test);
-                            $data = $abc->fetchAll(PDO::FETCH_ASSOC);
+                            $data = $abc->fetch_all(MYSQLI_ASSOC);
+                            // echo $data;
+                            // foreach($data as $cours){
+                            //     echo $cours['nom'] . "<br>";
+                            // }
+                            
+                            // $abc = $connet->query($test);
+                            // $data = $abc->fetchAll(PDO::FETCH_ASSOC);
                             if ($data > 0) {
                                 foreach ($data as $cours) {
                                     // echo $cours['nom'] . "<br>";
@@ -240,7 +279,8 @@ require "connect.php";
                                     </tr>
                                     <?php
                                 }
-                            } else {
+                            } 
+                            else {
                                 echo "aucun cours trouve";
                             }
                             ?>
@@ -255,6 +295,11 @@ require "connect.php";
             <div class="bg-white p-8 rounded-xl shadow border">
                 <div class="flex justify-between items-center mb-6 pb-4 border-b-2 border-gray-100">
                     <h2 class="text-3xl font-bold text-primary">Gestion des Équipements</h2>
+                    <div class="flex flex-col">
+                       <!-- <label class="mb-2 text-gray-600 font-medium text-sm">Nom du Cours *</label> -->
+                       <input type="text" placeholder="nom du Equipement" required name="nomEquiSearch"
+                           class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
+                   </div>
                     <button onclick="openModal('equipementModal')"
                         class="px-6 py-3 bg-primary text-white rounded-lg transition-all hover:bg-secondary">
                         ➕ Ajouter un Équipement
@@ -277,8 +322,8 @@ require "connect.php";
                         <tbody>
                             <?php
                             $test = "SELECT * FROM equipements";
-                            $abc = $connet->query($test);
-                            $data = $abc->fetchAll(PDO::FETCH_ASSOC);
+                           $abc = $connet->query($test);
+                            $data = $abc->fetch_all(MYSQLI_ASSOC);
                             if ($data > 0) {
                                 foreach ($data as $qui) {
                                     // echo $cours['nom'] . "<br>";
@@ -307,40 +352,6 @@ require "connect.php";
                                 echo "aucun cours trouve";
                             }
                             ?>
-                            <!--  <tr class="border-b hover:bg-gray-50">
-                                <td class="px-4 py-4 text-gray-600">Haltères 10kg</td>
-                                <td class="px-4 py-4 text-gray-600">Musculation</td>
-                                <td class="px-4 py-4 text-gray-600">25</td>
-                                <td class="px-4 py-4">
-                                    <span
-                                        class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-medium">Moyen</span>
-                                </td>
-                                <td class="px-4 py-4">
-                                    <div class="flex gap-2">
-                                        <button
-                                            class="px-4 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition">Modifier</button>
-                                        <button
-                                            class="px-4 py-1 bg-red-500 text-white rounded-lg hover:bg-red-400 transition">Supprimer</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="border-b hover:bg-gray-50">
-                                <td class="px-4 py-4 text-gray-600">Ballons de Yoga</td>
-                                <td class="px-4 py-4 text-gray-600">Yoga</td>
-                                <td class="px-4 py-4 text-gray-600">30</td>
-                                <td class="px-4 py-4">
-                                    <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-medium">À
-                                        remplacer</span>
-                                </td>
-                                <td class="px-4 py-4">
-                                    <div class="flex gap-2">
-                                        <button
-                                            class="px-4 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition">Modifier</button>
-                                        <button
-                                            class="px-4 py-1 bg-red-500 text-white rounded-lg hover:bg-red-400 transition">Supprimer</button>
-                                    </div>
-                                </td>
-                            </tr> -->
                         </tbody>
                     </table>
                 </div>
@@ -377,53 +388,41 @@ require "connect.php";
                 <button onclick="closeModal('coursModal')"
                     class="text-3xl text-gray-400 hover:text-gray-800 border-0 bg-transparent">×</button>
             </div>
-            <form method="post">
+            <form method="POST" >
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">Nom du Cours *</label>
-                        <input type="text" placeholder="Ex: Yoga du Matin" required name="nom"
+                        <input type="text" placeholder="Ex: Yoga du Matin"  name="nomCours"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                     </div>
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">Catégorie *</label>
-                        <input type="text" placeholder="Ex: Cardio" required name="categorie"
+                        <input type="text" placeholder="Ex: Cardio"  name="categorieCours"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                     </div>
-
-                    <!-- <div class="flex flex-col">
-                        <label class="mb-2 text-gray-600 font-medium text-sm">Catégorie *</label>
-                        <select required name="categorie"
-                            class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
-                            <option value="">Sélectionner...</option>
-                            <option>Yoga</option>
-                            <option>Cardio</option>
-                            <option>Musculation</option>
-                        </select>
-                    </div> -->
-
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">Date *</label>
-                        <input type="date" required
+                        <input type="date" 
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary"
-                            name="date">
+                            name="dateCours">
                     </div>
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">Heure *</label>
-                        <input type="time" required
+                        <input type="time" 
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary"
-                            name="heure">
+                            name="heureCours">
                     </div>
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">Durée (minutes) *</label>
-                        <input type="number" placeholder="60" required
+                        <input type="number" placeholder="60" 
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary"
-                            name="durre">
+                            name="durreCours">
                     </div>
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">Participants Max *</label>
-                        <input type="number" placeholder="20" required
+                        <input type="number" placeholder="20" 
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary"
-                            name="MaxParticipant">
+                            name="MaxParticipantCours">
                     </div>
                 </div>
                 <div class="mt-6 text-right">
@@ -432,7 +431,7 @@ require "connect.php";
                         Annuler
                     </button>
                     <button type="submit"
-                        class="px-6 py-3 bg-primary text-white rounded-lg transition-all hover:bg-secondary">
+                        class="px-6 py-3 bg-primary text-white rounded-lg transition-all hover:bg-secondary" name="Enregistrer">
                         Enregistrer
                     </button>
                 </div>
@@ -530,3 +529,4 @@ require "connect.php";
 </body>
 
 </html>
+
