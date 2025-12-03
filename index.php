@@ -8,7 +8,8 @@ require "connect.php";
 
 
 <?php
-if (isset($_POST["Enregistrer"])) {
+// ajouter cours
+if (isset($_POST["EnregistrerCours"])) {
     if (!empty($_POST["nomCours"]) && !empty($_POST["categorieCours"]) && !empty($_POST["dateCours"])&& !empty($_POST["heureCours"]) && !empty($_POST["durreCours"]) && !empty($_POST["MaxParticipantCours"]) ){
         $nom=$_POST["nomCours"];
         $categorieCours=$_POST["categorieCours"];
@@ -30,6 +31,41 @@ if (isset($_POST["Enregistrer"])) {
     }
     }
 }
+
+
+// ajouter equipement
+if (isset($_POST["EnregistrerEqui"])) {
+    if (!empty($_POST["nom"]) && !empty($_POST["type"]) && !empty($_POST["quantite"]) && !empty($_POST["etat"])){
+        $nom=$_POST["nom"];
+        $typeE=$_POST["type"];
+        $quantite=$_POST["quantite"];
+        $etat=$_POST["etat"];
+       
+        // echo $nom;
+    //   echo "les champ sont obligatoire";
+    //   echo "nadddddiiiia";
+    $sql="INSERT INTO equipements(nom,type, quantiteDispo, etat) VALUES('$nom','$typeE','$quantite','$etat')";
+    // echo $nom ,$categorieCours , $dateCours,$heureCours,$durreCours,$MaxParticipantCours;
+
+    // $abd=$connet->query($sql);
+    if ($connet->query($sql) === true) {
+        // echo "la insertion  reussite";
+        header("Location:index.php");
+        exit();
+    }
+    }
+}
+
+// supprimer un cours
+if(isset($_GET['id'])){
+echo "id clicabe : ".$_GET['id'];
+$id=$_GET['id'];
+$sqlDelete="DELETE FROM cours WHERE id=$id";
+if ($connet->query($sqlDelete)) {
+    echo "supprision reusite de id du cours ".$_GET['id'];
+}
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -253,7 +289,7 @@ if (isset($_POST["Enregistrer"])) {
                             // $data = $abc->fetchAll(PDO::FETCH_ASSOC);
                             if ($data > 0) {
                                 foreach ($data as $cours) {
-                                    // echo $cours['nom'] . "<br>";
+                                    // echo $cours['id'] . "<br>";
                                     $time = $cours["heure"];
                                     $heurMinute = date("H:i", strtotime($time));
                                     ?>
@@ -270,10 +306,12 @@ if (isset($_POST["Enregistrer"])) {
                                         <td class="px-4 py-4 text-gray-600"><?php echo $cours["nombreMaxParticipants"] ?></td>
                                         <td class="px-4 py-4">
                                             <div class="flex gap-2">
-                                                <button
-                                                    class="px-4 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition">Modifier</button>
-                                                <button
-                                                    class="px-4 py-1 bg-red-500 text-white rounded-lg hover:bg-red-400 transition">Supprimer</button>
+                                                <form action="" method="GET">
+                                                    <a href="index.php?id=<?php echo $cours['id']?>"
+                                                        class="px-4 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition modifierCours">Modifier</a>
+                                                    <a href="index.php?id=<?php echo $cours['id']?>"
+                                                        class="px-4 py-1 bg-red-500 text-white rounded-lg hover:bg-red-400 transition supprimerCours">Supprimer</a>
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>
@@ -338,10 +376,10 @@ if (isset($_POST["Enregistrer"])) {
                                         </td>
                                         <td class="px-4 py-4">
                                             <div class="flex gap-2">
-                                                <button
-                                                    class="px-4 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition">Modifier</button>
-                                                <button
-                                                    class="px-4 py-1 bg-red-500 text-white rounded-lg hover:bg-red-400 transition">Supprimer</button>
+                                                <a href="index.php?id=<?php echo $cours['id']?>"
+                                                    class="px-4 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition modifierEqui">Modifier</a>
+                                                <a href="index.php?id=<?php echo $cours['id']?>"
+                                                    class="px-4 py-1 bg-red-500 text-white rounded-lg hover:bg-red-400 transition suuprimerEqui">Supprimer</a>
                                             </div>
                                         </td>
                                     </tr>
@@ -431,7 +469,7 @@ if (isset($_POST["Enregistrer"])) {
                         Annuler
                     </button>
                     <button type="submit"
-                        class="px-6 py-3 bg-primary text-white rounded-lg transition-all hover:bg-secondary" name="Enregistrer">
+                        class="px-6 py-3 bg-primary text-white rounded-lg transition-all hover:bg-secondary" name="EnregistrerCours">
                         Enregistrer
                     </button>
                 </div>
@@ -447,16 +485,16 @@ if (isset($_POST["Enregistrer"])) {
                 <button onclick="closeModal('equipementModal')"
                     class="text-3xl text-gray-400 hover:text-gray-800 border-0 bg-transparent">×</button>
             </div>
-            <form>
+            <form method="POST">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">Nom de l'Équipement *</label>
-                        <input type="text" placeholder="Ex: Tapis de Course" required
+                        <input type="text" placeholder="Ex: Tapis de Course" required name ="nom"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                     </div>
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">Type *</label>
-                        <select required
+                        <select required name="type"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                             <option value="">Sélectionner...</option>
                             <option>Cardio</option>
@@ -466,12 +504,12 @@ if (isset($_POST["Enregistrer"])) {
                     </div>
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">Quantité *</label>
-                        <input type="number" placeholder="10" required
+                        <input type="number" placeholder="10" required name="quantite"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                     </div>
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">État *</label>
-                        <select required
+                        <select required name="etat"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                             <option value="">Sélectionner...</option>
                             <option>Bon</option>
@@ -486,7 +524,7 @@ if (isset($_POST["Enregistrer"])) {
                         Annuler
                     </button>
                     <button type="submit"
-                        class="px-6 py-3 bg-primary text-white rounded-lg transition-all hover:bg-secondary">
+                        class="px-6 py-3 bg-primary text-white rounded-lg transition-all hover:bg-secondary" name="EnregistrerEqui">
                         Enregistrer
                     </button>
                 </div>
