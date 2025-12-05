@@ -5,6 +5,10 @@ if(!isset($_SESSION['user'])) {
     header("Location: auth/login.php");
     exit();
 }
+else{
+    header("Location: index.php");
+    exit();
+}
 ?>
 
 <?php

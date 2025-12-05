@@ -10,7 +10,7 @@ if (isset($_POST['inscrire'])) {
     $dateNais=$_POST["dateNais"];
     $sql="INSERT INTO users(name,email,passwordUser,phone,dateNais) VALUES ('$nom','$email','$password','$phone','$dateNais')";
     if ($connet->query($sql)){
-        header("Location:./index.php");
+        header("Location:../index.php");
         exit();
     }
 }

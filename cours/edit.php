@@ -13,7 +13,7 @@ $sqlUpdate="SELECT * FROM cours WHERE id=$id";
 
 $test=$connet->query($sqlUpdate);
 $abc=$test->fetch_all(MYSQLI_ASSOC);
-
+// echo $abc;
 foreach($abc as $cours){
     // echo $cours["nom"] . $cours["catégorie"] .$cours["dateCours"];
 
@@ -120,7 +120,5 @@ if (isset($_POST['modifier'])) {
             </form>
         </div>
     </div>
-
-  
 
 </body>

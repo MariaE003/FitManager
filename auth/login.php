@@ -3,7 +3,20 @@ require "../nav.php";
 require "../connect.php";
 
 
+if (isset($_POST['login'])) {
+    $email=$_POST["email"];
+    $password=$_POST["password"];
+    
+    $sql="SELECT * FROM users WHERE email='$email' AND passwordUser='$password'";
+    echo $connet->query($sql);
+    if ($connet->query($sql)===true){
+        header("Location:../index.php");
+        exit();
+    }
+    // else{
 
+    // }
+}
 
 
 ?>
@@ -44,7 +57,7 @@ require "../connect.php";
                     </div>
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">password</label>
-                        <input type="number" placeholder="EX : hT POt" required name="password"
+                        <input type="text" placeholder="EX : hT POt" required name="password"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                     </div>
                 </div>
@@ -53,8 +66,8 @@ require "../connect.php";
                         class="mr-3 px-5 py-2 bg-red-100 text-red-700 rounded-md transition-all hover:bg-red-700 hover:text-white">
                        inscrire
                     </a>
-                    <button type="submit"
-                        class="px-6 py-3 bg-primary text-white rounded-lg transition-all hover:bg-secondary" name="EnregistrerEqui">
+                    <button 
+                        class="px-6 py-3 bg-primary text-white rounded-lg transition-all hover:bg-secondary" name="login">
                         login
                     </button>
                 </div>
