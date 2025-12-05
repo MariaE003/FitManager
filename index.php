@@ -1,91 +1,120 @@
 <?php
+session_start();
+
+if(!isset($_SESSION['user'])) {
+    header("Location: auth/login.php");
+    exit();
+}
+?>
+
+<?php
+require "./nav.php";
 require "connect.php";
 //  echo "hi";
 // $insert="INSERT INTO cours(nom, catégorie, dateCours, heure, duree, nombreMaxParticipants) values('abc','abcCat','2003-06-12','11',1,15)";
 // $connet->exec($insert);
 // echo "test"
+
 ?>
 
 
 <?php
-// ajouter cours
-if (isset($_POST["EnregistrerCours"])) {
-    if (!empty($_POST["nomCours"]) && !empty($_POST["categorieCours"]) && !empty($_POST["dateCours"])&& !empty($_POST["heureCours"]) && !empty($_POST["durreCours"]) && !empty($_POST["MaxParticipantCours"]) ){
-        $nom=$_POST["nomCours"];
-        $categorieCours=$_POST["categorieCours"];
-        $dateCours=$_POST["dateCours"];
-        $heureCours=$_POST["heureCours"];
-        $durreCours=$_POST["durreCours"];
-        $MaxParticipantCours=$_POST["MaxParticipantCours"];
-        // echo $nom;
-    //   echo "les champ sont obligatoire";
-    //   echo "nadddddiiiia";
-    $sql="INSERT INTO cours(nom,catégorie,dateCours,heure,duree,nombreMaxParticipants) VALUES('$nom','$categorieCours','$dateCours','$heureCours','$durreCours','$MaxParticipantCours')";
-    // echo $nom ,$categorieCours , $dateCours,$heureCours,$durreCours,$MaxParticipantCours;
+// // ajouter cours
+// if (isset($_POST["EnregistrerCours"])) {
+//     if (!empty($_POST["nomCours"]) && !empty($_POST["categorieCours"]) && !empty($_POST["dateCours"])&& !empty($_POST["heureCours"]) && !empty($_POST["durreCours"]) && !empty($_POST["MaxParticipantCours"]) ){
+//         $nom=$_POST["nomCours"];
+//         $categorieCours=$_POST["categorieCours"];
+//         $dateCours=$_POST["dateCours"];
+//         $heureCours=$_POST["heureCours"];
+//         $durreCours=$_POST["durreCours"];
+//         $MaxParticipantCours=$_POST["MaxParticipantCours"];
+//         // echo $nom;
+//     //   echo "les champ sont obligatoire";
+//     //   echo "nadddddiiiia";
+//     $sql="INSERT INTO cours(nom,catégorie,dateCours,heure,duree,nombreMaxParticipants) VALUES('$nom','$categorieCours','$dateCours','$heureCours','$durreCours','$MaxParticipantCours')";
+//     // echo $nom ,$categorieCours , $dateCours,$heureCours,$durreCours,$MaxParticipantCours;
 
-    // $abd=$connet->query($sql);
-    if ($connet->query($sql) === true) {
-        // echo "la insertion  reussite";
-        header("Location:index.php");
-        exit();
-    }
-    }
-}
+//     // $abd=$connet->query($sql);
+//     if ($connet->query($sql) === true) {
+//         // echo "la insertion  reussite";
+//         header("Location:index.php");
+//         exit();
+//     }
+//     }
+// }
 
 
-// ajouter equipement
-if (isset($_POST["EnregistrerEqui"])) {
-    if (!empty($_POST["nom"]) && !empty($_POST["type"]) && !empty($_POST["quantite"]) && !empty($_POST["etat"])){
-        $nom=$_POST["nom"];
-        $typeE=$_POST["type"];
-        $quantite=$_POST["quantite"];
-        $etat=$_POST["etat"];
+// // ajouter equipement
+// if (isset($_POST["EnregistrerEqui"])) {
+//     if (!empty($_POST["nom"]) && !empty($_POST["type"]) && !empty($_POST["quantite"]) && !empty($_POST["etat"])){
+//         $nom=$_POST["nom"];
+//         $typeE=$_POST["type"];
+//         $quantite=$_POST["quantite"];
+//         $etat=$_POST["etat"];
        
-        // echo $nom;
-    //   echo "les champ sont obligatoire";
-    //   echo "nadddddiiiia";
-    $sql="INSERT INTO equipements(nom,type, quantiteDispo, etat) VALUES('$nom','$typeE','$quantite','$etat')";
-    // echo $nom ,$categorieCours , $dateCours,$heureCours,$durreCours,$MaxParticipantCours;
+//         // echo $nom;
+//     //   echo "les champ sont obligatoire";
+//     //   echo "nadddddiiiia";
+//     $sql="INSERT INTO equipements(nom,type, quantiteDispo, etat) VALUES('$nom','$typeE','$quantite','$etat')";
+//     // echo $nom ,$categorieCours , $dateCours,$heureCours,$durreCours,$MaxParticipantCours;
 
-    // $abd=$connet->query($sql);
-    if ($connet->query($sql) === true) {
-        // echo "la insertion  reussite";
-        header("Location:index.php");
-        exit();
-    }
-    }
-}
+//     // $abd=$connet->query($sql);
+//     if ($connet->query($sql) === true) {
+//         // echo "la insertion  reussite";
+//         header("Location:index.php");
+//         exit();
+//     }
+//     }
+// }
 
-// supprimer un cours
-if(isset($_GET['id'])){
-// echo "id clicabe : ".$_GET['id'];
-$id=$_GET['id'];
-$sqlDelete="DELETE FROM cours WHERE id=$id";
-if ($connet->query($sqlDelete)) {
-    // echo "supprision reusite de id du cours ".$_GET['id'];
-}
-}
-
-// supprimer un equipement
-if(isset($_GET['idEqui'])){
-// echo "id clicabe : ".$_GET['idEqui'];
-$idEqui=$_GET['idEqui'];
-$sqlDeleteEqui="DELETE FROM equipements WHERE id=$idEqui";
-if ($connet->query($sqlDeleteEqui)) {
-    // echo "supprision reusite de id du cours ".$idEqui;
-}
-}
-
-// modifier un cous
-
+// // supprimer un cours
 // if(isset($_GET['id'])){
 // // echo "id clicabe : ".$_GET['id'];
 // $id=$_GET['id'];
-// $sqlDelete="SELECT * FROM cours WHERE id=$id";
-// if ($connet->query($sqlDelete)) {
-//     echo $sqlDelete;
-//     // echo "supprision reusite de id du cours ".$_GET['id'];
+// $sqlDeleteEqui="DELETE FROM cours_equipements WHERE idC=$id";
+// $sqlDeleteCours="DELETE FROM cours WHERE id=$id";
+// $connet->query($sqlDeleteEqui);
+// $connet->query($sqlDeleteCours);
+// // if ($connet->query($sqlDelete)) {
+// //     // echo "supprision reusite de id du cours ".$_GET['id'];
+// // }
 // }
+
+// // supprimer un equipement
+// if(isset($_GET['idEqui'])){
+// // echo "id clicabe : ".$_GET['idEqui'];
+// $idEqui=$_GET['idEqui'];
+
+// $sqlDeleteEqui="DELETE FROM cours_equipements WHERE idE=$idEqui";
+
+// $sqlDelete="DELETE FROM equipements WHERE id=$idEqui";
+
+// $connet->query($sqlDeleteEqui);
+// $connet->query($sqlDelete);
+// // if ($connet->query($sqlDelete)) {
+// //     // echo "supprision reusite de id du cours ".$idEqui;
+// // }
+// }
+
+// // modifier un cous
+
+// if(isset($_GET["modifierCours"]) && isset($_GET['idEditCours'])){
+// // echo "id clicabe : ".$_GET['id'];
+// $id=$_GET['idEditCours'];
+// $sqlUpdate="SELECT * FROM cours WHERE id=$id";
+
+
+
+// // $test=$connet->query($sqlUpdate);
+// // $abc=$test->fetch_all(MYSQLI_ASSOC);
+
+// // foreach($abc as $cours){
+// //     echo $cours["nom"] . $cours["catégorie"] .$cours["dateCours"];
+// // }
+// // if ($connet->query($sqlUpdate)) {
+// //     echo $sqlUpdate;
+// //     // echo "supprision reusite de id du cours ".$_GET['id'];
+// // }
 // }
 
 
@@ -110,12 +139,13 @@ if ($connet->query($sqlDeleteEqui)) {
             }
         }
     </script>
+    
 </head>
 
 <body class="bg-gray-100 text-gray-800 min-h-screen">
 
     <!-- NAVBAR - Design du premier code -->
-    <nav class="w-full bg-white shadow-sm px-10 py-4 flex justify-between items-center sticky top-0 z-10 border-b">
+    <!-- <nav class="w-full bg-white shadow-sm px-10 py-4 flex justify-between items-center sticky top-0 z-10 border-b">
         <h1 class="text-2xl font-bold text-primary">Sport Manager</h1>
         <ul class="flex gap-8 text-lg font-medium">
             <li>
@@ -143,7 +173,7 @@ if ($connet->query($sqlDeleteEqui)) {
                 </button>
             </li>
         </ul>
-    </nav>
+    </nav> -->
 
     <main class="p-10">
         <!-- Dashboard Section -->
@@ -155,33 +185,50 @@ if ($connet->query($sqlDeleteEqui)) {
                 <div
                     class="bg-white p-8 rounded-xl shadow text-center border transition-transform hover:-translate-y-2">
                     <h3 class="text-xl font-semibold">Total Cours</h3>
-                    <p class="text-4xl font-bold mt-4 text-primary">24</p>
+                    <?php
+                    $count="SELECT COUNT(*) AS total FROM cours";
+                    $test= $connet->query($count);
+                    $resul=$test->fetch_assoc();
+                    ?>
+
+                    <p class="text-4xl font-bold mt-4 text-primary">
+                        <?php echo $resul['total'];?> </p>
                     <div class="text-gray-400 text-sm mt-2">cours programmés</div>
                 </div>
+                 <?php
+                    $count="SELECT COUNT(*) AS total FROM equipements";
+                    $test= $connet->query($count);
+                    $resul=$test->fetch_assoc();
 
+
+                    // Nbr participant 
+                    $parti="SELECT SUM(nombreMaxParticipants) as nbr_Participant FROM COURS";
+                    $nbrPartici= $connet->query($parti);
+                    $resulNbrPart=$nbrPartici->fetch_assoc();
+
+                    ?>                    
                 <div
                     class="bg-white p-8 rounded-xl shadow text-center border transition-transform hover:-translate-y-2">
                     <h3 class="text-xl font-semibold">Total Équipements</h3>
-                    <p class="text-4xl font-bold mt-4 text-primary">156</p>
+                    <p class="text-4xl font-bold mt-4 text-primary"> <?php echo $resul['total'];?></p>
                     <div class="text-gray-400 text-sm mt-2">équipements disponibles</div>
                 </div>
 
                 <div
                     class="bg-white p-8 rounded-xl shadow text-center border transition-transform hover:-translate-y-2">
                     <h3 class="text-xl font-semibold">Participants</h3>
-                    <p class="text-4xl font-bold mt-4 text-primary">342</p>
+                    <p class="text-4xl font-bold mt-4 text-primary"><?php echo $resulNbrPart['nbr_Participant'];?></p>
                     <div class="text-gray-400 text-sm mt-2">inscriptions actives</div>
                 </div>
 
-                <div
+                <!-- <div
                     class="bg-white p-8 rounded-xl shadow text-center border transition-transform hover:-translate-y-2">
                     <h3 class="text-xl font-semibold">Taux d'occupation</h3>
                     <p class="text-4xl font-bold mt-4 text-primary">78%</p>
                     <div class="text-gray-400 text-sm mt-2">capacité utilisée</div>
-                </div>
+                </div> -->
             </div>
-
-            <!-- Stats supplémentaires du deuxième code -->
+            <!-- Stats supplémentaires du deuxieme code -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
                 <div class="bg-white p-5 rounded-xl shadow border text-center">
                     <h3 class="text-primary font-semibold mb-4 text-lg">Répartition des Cours</h3>
@@ -194,7 +241,7 @@ if ($connet->query($sqlDeleteEqui)) {
             </div>
 
             <!-- TABLE - Design du premier code avec fonctionnalités du deuxième -->
-            <div class="bg-white mt-12 p-8 rounded-xl shadow border">
+            <!-- <div class="bg-white mt-12 p-8 rounded-xl shadow border">
                 <div class="flex justify-between items-center mb-6">
                     <h3 class="text-2xl font-bold">Liste des Cours Récents</h3>
                 </div>
@@ -262,8 +309,8 @@ if ($connet->query($sqlDeleteEqui)) {
                         </tr>
                     </tbody>
                 </table>
-            </div>
-        </div>
+            </div>-->
+        </div> 
 
         <!-- Cours Section -->
         <div id="cours-section" class="content-section hidden">
@@ -275,10 +322,11 @@ if ($connet->query($sqlDeleteEqui)) {
                        <input type="text" placeholder="nom du cours" required name="nomcoursSearch"
                            class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                    </div>
-                    <button onclick="openModal('coursModal')"
+                   <!-- kan button et onclick="openModal('coursModal')" -->
+                    <a href="./cours/add.php" 
                         class="px-6 py-3 bg-primary text-white rounded-lg transition-all hover:bg-secondary">
                         ➕ Ajouter un Cours
-                    </button>
+                    </a>
                 </div>
 
                 <div class="overflow-x-auto">
@@ -329,12 +377,14 @@ if ($connet->query($sqlDeleteEqui)) {
                                         <td class="px-4 py-4 text-gray-600"><?php echo $cours["nombreMaxParticipants"] ?></td>
                                         <td class="px-4 py-4">
                                             <div class="flex gap-2">
-                                                <form action="" method="GET">
-                                                    <a href="index.php?id=<?php echo $cours['id']?>"
-                                                        class="px-4 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition modifierCours">Modifier</a>
-                                                    <a href="index.php?id=<?php echo $cours['id']?>"
-                                                        class="px-4 py-1 bg-red-500 text-white rounded-lg hover:bg-red-400 transition supprimerCours">Supprimer</a>
-                                                </form>
+                                                <!-- <form method="GET"> 
+                                                    onclick="openModal('updatecoursModal');event.preventDefault();"
+                                                -->
+                                                    <a href="./cours/edit.php?idEditCours=<?php echo $cours['id']?>"
+                                                    name="modifierCours" class="px-4 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition modifierCours">Modifier</a>
+                                                    
+                                                    <a href="./cours/delete.php?id=<?php echo $cours['id']?>" class="px-4 py-1 bg-red-500 text-white rounded-lg hover:bg-red-400 transition supprimerCours">Supprimer</a>
+                                                <!-- </form> -->
                                             </div>
                                         </td>
                                     </tr>
@@ -361,10 +411,11 @@ if ($connet->query($sqlDeleteEqui)) {
                        <input type="text" placeholder="nom du Equipement" required name="nomEquiSearch"
                            class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                    </div>
-                    <button onclick="openModal('equipementModal')"
+                   <!-- onclick="openModal('equipementModal')" -->
+                    <a href="./equipements/add.php" 
                         class="px-6 py-3 bg-primary text-white rounded-lg transition-all hover:bg-secondary">
                         ➕ Ajouter un Équipement
-                    </button>
+                    </a>
                 </div>
 
                 <div class="overflow-x-auto">
@@ -387,11 +438,11 @@ if ($connet->query($sqlDeleteEqui)) {
                             $data = $abc->fetch_all(MYSQLI_ASSOC);
                             if ($data > 0) {
                                 foreach ($data as $qui) {
-                                    // echo $cours['nom'] . "<br>";
+                                    // echo $qui['typeEqui'] . "<br>";
                                     ?>
                                     <tr class="border-b hover:bg-gray-50">
                                         <td class="px-4 py-4 text-gray-600"><?php echo $qui["nom"] ?></td>
-                                        <td class="px-4 py-4 text-gray-600"><?php echo $qui["type"] ?></td>
+                                        <td class="px-4 py-4 text-gray-600"><?php echo $qui["typeEqui"] ?></td>
                                         <td class="px-4 py-4 text-gray-600"><?php echo $qui["quantiteDispo"] ?></td>
                                         <td class="px-4 py-4">
                                             <span
@@ -399,9 +450,9 @@ if ($connet->query($sqlDeleteEqui)) {
                                         </td>
                                         <td class="px-4 py-4">
                                             <div class="flex gap-2">
-                                                <a href="index.php?idEqui=<?php echo $qui['id']?>"
+                                                <a href="./equipements/edit.php?idEquiUpdate=<?php echo $qui['id']?>"
                                                     class="px-4 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition modifierEqui">Modifier</a>
-                                                <a href="index.php?idEqui=<?php echo $qui['id']?>"
+                                                <a href="./equipements/delete.php?idEqui=<?php echo $qui['id']?>"
                                                     class="px-4 py-1 bg-red-500 text-white rounded-lg hover:bg-red-400 transition suuprimerEqui">Supprimer</a>
                                             </div>
                                         </td>
@@ -441,7 +492,7 @@ if ($connet->query($sqlDeleteEqui)) {
         </div>
     </main>
 
-    <!-- Modal Cours -->
+    <!-- Modal Cours
     <div id="coursModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center">
         <div class="bg-white p-8 rounded-xl max-w-2xl w-11/12 max-h-screen overflow-y-auto">
             <div class="flex justify-between items-center mb-6">
@@ -498,10 +549,111 @@ if ($connet->query($sqlDeleteEqui)) {
                 </div>
             </form>
         </div>
-    </div>
+    </div> -->
+    
+    
+    <!-- modal modifier cours
+    <?php
+//       if(isset($_GET['idEditCours'])){
+//         // $javascript = 
+//         // echo "<script>openModal('updatecoursModal')</script>";
+//         // embedJavaScript($javascript);
+// // /echo "id clicabe : ".$_GET['id'];
+// $id=$_GET['idEditCours'];
+// // echo $id;
+// $sqlUpdate="SELECT * FROM cours WHERE id=$id";
 
+// $test=$connet->query($sqlUpdate);
+// $abc=$test->fetch_all(MYSQLI_ASSOC);
+
+// foreach($abc as $cours){
+    // echo $cours["nom"] . $cours["catégorie"] .$cours["dateCours"];
+
+?>
+    <div id="updatecoursModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 
+    <?=isset($_GET['idEditCours'])?"flex":"hidden"?> items-center justify-center">
+        <div class="bg-white p-8 rounded-xl max-w-2xl w-11/12 max-h-screen overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Modifier un Cours</h2>
+                <button onclick="closeModal('updatecoursModal')"
+                    class="text-3xl text-gray-400 hover:text-gray-800 border-0 bg-transparent">×</button>
+            </div>
+            <form method="POST">
+                <input type="hidden" name="idCours" value="<?php echo $cours['id']; ?>">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="flex flex-col">
+                        <label class="mb-2 text-gray-600 font-medium text-sm">Nom du Cours *</label>
+                        <input type="text" placeholder="Ex: Yoga du Matin"  name="nomCoursAmodifier" value="<?php echo $cours['nom'] ?>"
+                            class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="mb-2 text-gray-600 font-medium text-sm">Catégorie *</label>
+                        <input type="text" placeholder="Ex: Cardio"  name="categorieCoursAmodifier" value="<?php echo $cours['catégorie'] ?>"
+                            class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="mb-2 text-gray-600 font-medium text-sm">Date *</label>
+                        <input type="date" value="<?php echo $cours['dateCours'] ?>"
+                            class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary"
+                            name="dateCoursAmodifier">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="mb-2 text-gray-600 font-medium text-sm">Heure *</label>
+                        <input type="time" value="<?php echo $cours['heure'] ?>"
+                            class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary"
+                            name="heureCoursAmodifier">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="mb-2 text-gray-600 font-medium text-sm">Durée (minutes) *</label>
+                        <input type="number" placeholder="60" value="<?php echo $cours['duree'] ?>"
+                            class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary"
+                            name="durreCoursAmodifier">
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="mb-2 text-gray-600 font-medium text-sm">Participants Max *</label>
+                        <input type="number" placeholder="20" value="<?php echo $cours['nombreMaxParticipants'] ?>"
+                            class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary"
+                            name="MaxParticipantCoursAmodifier">
+                    </div>
+                </div>
+                <div class="mt-6 text-right">
+                    <button type="button" onclick="closeModal('updatecoursModal')"
+                        class="mr-3 px-5 py-2 bg-red-100 text-red-700 rounded-md transition-all hover:bg-red-700 hover:text-white">
+                        Annuler
+                    </button>
+                    <button type="submit"
+                        class="px-6 py-3 bg-primary text-white rounded-lg transition-all hover:bg-secondary" name="modifier">
+                        modifier
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <?php
+//     }
+// }
+// if (isset($_POST['modifier'])) {
+//    $id= $_POST["idCours"];
+    
+//     $nomCour=$_POST["nomCoursAmodifier"];
+//     $categorieCour=$_POST["categorieCoursAmodifier"];
+//     $dateCours=$_POST["dateCoursAmodifier"];
+//     $heureCour=$_POST["heureCoursAmodifier"];
+//     $durreCour=$_POST["durreCoursAmodifier"];
+//     $MaxPartici=$_POST["MaxParticipantCoursAmodifier"];
+
+//  $update="UPDATE cours SET nom='$nomCour',catégorie='$categorieCour',dateCours='$dateCours',heure='$heureCour',duree='$durreCour',nombreMaxParticipants='$MaxPartici'  WHERE id=$id";
+// //  $exec=$connet->query($update);
+//  if ($connet->query($update)) {
+//     header("Location:index.php");
+//     exit();
+//  }
+// }
+
+    ?>
+ -->
     <!-- Modal Équipement -->
-    <div id="equipementModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center">
+    <!-- <div id="equipementModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center">
         <div class="bg-white p-8 rounded-xl max-w-2xl w-11/12 max-h-screen overflow-y-auto">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold text-gray-800">Ajouter un Équipement</h2>
@@ -553,9 +705,12 @@ if ($connet->query($sqlDeleteEqui)) {
                 </div>
             </form>
         </div>
-    </div>
+    </div> -->
 
-    <script>
+
+
+
+<script>
         function showSection(section) {
             document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
             document.querySelectorAll('.nav-btn').forEach(btn => {
@@ -578,6 +733,7 @@ if ($connet->query($sqlDeleteEqui)) {
         function closeModal(modalId) {
             document.getElementById(modalId).classList.add('hidden');
             document.getElementById(modalId).classList.remove('flex');
+            // location.reload();
         }
 
         window.onclick = function (event) {

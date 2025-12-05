@@ -40,3 +40,20 @@ insert into cours(nom,catégorie,dateCours,heure,duree,nombreMaxParticipants) va
 INSERT INTO equipements (nom, type, quantiteDispo, etat) VALUES
 ('Tapis de course', 'Cardio', 5, 'Bon')
 
+
+
+
+-- la creation de la table user
+CREATE table users(
+	id int PRIMARY KEY AUTO_INCREMENT,
+    name varchar(100) NOT null,
+    email varchar(100) UNIQUE,
+   	passwordUser varchar(100),
+    phone int,
+    dateNais date
+)
+
+
+-- modifier le type de nombre
+alter TABLE users
+MODIFY phone varchar(10);
