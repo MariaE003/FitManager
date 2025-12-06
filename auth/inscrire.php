@@ -1,20 +1,27 @@
 <?php
 // require "../session.php";
+
 require "../nav.php";
 require "../connect.php";
-
+$chapmsVide=false;
 if (isset($_POST['inscrire'])) {
-    $nom=$_POST["nom"];
-    $email=$_POST["email"];
-    $password=$_POST["password"];
-    $phone=$_POST["phone"];
-    $dateNais=$_POST["dateNais"];
-    $sql="INSERT INTO users(name,email,passwordUser,phone,dateNais) VALUES ('$nom','$email','$password','$phone','$dateNais')";
-    if ($connet->query($sql)){
-        header("Location:../index.php");
-        exit();
+    if (!empty($_POST["nom"]) && !empty($_POST["email"])&& !empty($_POST["password"])&& !empty($_POST["phone"])&& !empty($_POST["dateNais"])) {
+        $nom=$_POST["nom"];
+        $email=$_POST["email"];
+        $password=$_POST["password"];
+        $phone=$_POST["phone"];
+        $dateNais=$_POST["dateNais"];
+        $sql="INSERT INTO users(name,email,passwordUser,phone,dateNais) VALUES ('$nom','$email','$password','$phone','$dateNais')";
+        if ($connet->query($sql)){
+            header("Location: login.php");
+            exit();
+        }
+        }
+    else{
+  $chapmsVide=true;
     }
 }
+
 
 ?>
 
@@ -24,6 +31,7 @@ if (isset($_POST['inscrire'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../style/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -49,29 +57,31 @@ if (isset($_POST['inscrire'])) {
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">Nom</label>
-                        <input type="text" placeholder="Ex: Tapis de Course" required name ="nom"
+                        <input type="text" placeholder="Ex: Tapis de Course"  name ="nom"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                     </div>
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">Email</label>
-                         <input type="email" placeholder="Ex: Tapis@gmail.com" required name ="email"
+                         <input type="email" placeholder="Ex: Tapis@gmail.com"  name ="email"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                     </div>
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">password</label>
-                        <input type="text" placeholder="EX : hT POt" required name="password"
+                        <input type="text" placeholder="EX : hT POt"  name="password"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                     </div>
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">phone</label>
-                        <input type="tel" placeholder="Ex: 0699225566" required name="phone"
+                        <input type="tel" placeholder="Ex: 0699225566"  name="phone"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                     </div>
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">date de naissance</label>
-                        <input type="date" placeholder="Ex: 2003/06/12" required name ="dateNais"
+                        <input type="date" placeholder="Ex: 2003/06/12"  name ="dateNais"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                     </div>
+                    <div id="toast-error">tout les champ sont obligatoire</div>
+
                 </div>
                 <div class="mt-6 text-right">
                     <a href="./login.php"
@@ -86,6 +96,21 @@ if (isset($_POST['inscrire'])) {
             </form>
         </div>
     </div>
-    
+    <?php
+    if ($chapmsVide) {
+    ?>
+<script>
+    function toast(){
+        let div=document.querySelector('#toast-error');
+        div.className='show';
+        setTimeout(function(){
+            div.className=div.className.replace('show','');
+        },3000);
+    }    
+    toast();
+</script>
+<?php
+    }
+?>
     </body>
 

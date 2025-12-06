@@ -2,21 +2,27 @@
 // require "../session.php";
 require "../nav.php";
 require "../connect.php";
+$chapmsVide=false;
 
 session_start();
 
 
 if (isset($_POST['login'])) {
+    if (!empty($_POST["email"]) && !empty($_POST["password"])) {
     $email=$_POST["email"];
     $password=$_POST["password"];
     
     $sql="SELECT * FROM users WHERE email='$email' AND passwordUser='$password'";
     // echo $connet->query($sql);
-    if ($connet->query($sql)){
+    $result=$connet->query($sql);
+    if ($result->num_rows > 0){
         $_SESSION["id_user"]=$email;
         header("Location: ../index.php");
         exit();
     }
+    }else{
+  $chapmsVide=true;
+}
     
 }
 
@@ -29,6 +35,7 @@ if (isset($_POST['login'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../style/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -62,6 +69,8 @@ if (isset($_POST['login'])) {
                         <input type="text" placeholder="EX : hT POt"  name="password"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                     </div>
+                    <div id="toast-error">tout les champ sont obligatoire</div>
+
                 </div>
                 <div class="mt-6 text-right">
                     <a href="./inscrire.php"
@@ -77,5 +86,21 @@ if (isset($_POST['login'])) {
         </div>
     </div>
     
+    <?php
+    if ($chapmsVide) {
+    ?>
+<script>
+    function toast(){
+        let div=document.querySelector('#toast-error');
+        div.className='show';
+        setTimeout(function(){
+            div.className=div.className.replace('show','');
+        },3000);
+    }    
+    toast();
+</script>
+<?php
+    }
+?>
     </body>
 

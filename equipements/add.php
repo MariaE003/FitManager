@@ -3,6 +3,8 @@ require "../session.php";
 require "../nav.php";
 require "../connect.php";
 
+$chapmsVide=false;
+
 // ajouter equipement
 if (isset($_POST["EnregistrerEqui"])) {
     if (!empty($_POST["nom"]) && !empty($_POST["type"]) && !empty($_POST["quantite"]) && !empty($_POST["etat"])){
@@ -24,7 +26,10 @@ if (isset($_POST["EnregistrerEqui"])) {
         header("Location:../equipements.php");
         exit();
     }
-    }
+}
+else{
+  $chapmsVide=true;
+}
 }
 
 ?>
@@ -34,6 +39,8 @@ if (isset($_POST["EnregistrerEqui"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../style/style.css">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -61,12 +68,12 @@ if (isset($_POST["EnregistrerEqui"])) {
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">Nom de l'Équipement *</label>
-                        <input type="text" placeholder="Ex: Tapis de Course" required name ="nom"
+                        <input type="text" placeholder="Ex: Tapis de Course"  name ="nom"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                     </div>
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">Type *</label>
-                        <select required name="type"
+                        <select  name="type"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                             <option value="">Sélectionner...</option>
                             <option>Cardio</option>
@@ -76,12 +83,12 @@ if (isset($_POST["EnregistrerEqui"])) {
                     </div>
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">Quantité *</label>
-                        <input type="number" placeholder="10" required name="quantite"
+                        <input type="number" placeholder="10"  name="quantite"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                     </div>
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">État *</label>
-                        <select required name="etat"
+                        <select  name="etat"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                             <option value="">Sélectionner...</option>
                             <option>Bon</option>
@@ -89,9 +96,12 @@ if (isset($_POST["EnregistrerEqui"])) {
                             <option>À remplacer</option>
                         </select>
                     </div>
+
+                    <div id="toast-error">tout les champ sont obligatoire</div>
+
                 </div>
                 <div class="mt-6 text-right">
-                    <a href="../index.php"
+                    <a href="../equipements.php"
                         class="mr-3 px-5 py-2 bg-red-100 text-red-700 rounded-md transition-all hover:bg-red-700 hover:text-white">
                         Annuler
                     </a>
@@ -103,6 +113,21 @@ if (isset($_POST["EnregistrerEqui"])) {
             </form>
         </div>
     </div>
-    
+    <?php
+    if ($chapmsVide) {
+    ?>
+<script>
+    function toast(){
+        let div=document.querySelector('#toast-error');
+        div.className='show';
+        setTimeout(function(){
+            div.className=div.className.replace('show','');
+        },3000);
+    }    
+    toast();
+</script>
+<?php
+    }
+?>
     </body>
 

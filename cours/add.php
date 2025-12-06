@@ -40,6 +40,7 @@ if (isset($_POST["EnregistrerCours"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../style/style.css">
     <script>
         tailwind.config = {
             theme: {
@@ -53,7 +54,7 @@ if (isset($_POST["EnregistrerCours"])) {
         }
     </script>
     <style>
-        #toast-error {
+        /* #toast-error {
   visibility: hidden;
   min-width: 250px;
   margin-left: -125px;
@@ -93,7 +94,7 @@ if (isset($_POST["EnregistrerCours"])) {
 @keyframes fadeout {
   from {bottom: 30px; opacity: 1;}
   to {bottom: 0; opacity: 0;}
-}
+} */
     </style>
  </head>
  <body>
@@ -145,7 +146,7 @@ if (isset($_POST["EnregistrerCours"])) {
                     <div id="toast-error">tout les champ sont obligatoire</div>
                 </div>
                 <div class="mt-6 text-right">
-                    <a href="../index.php"
+                    <a href="../cours.php"
                         class="mr-3 px-5 py-2 bg-red-100 text-red-700 rounded-md transition-all hover:bg-red-700 hover:text-white">
                         Annuler
                     </a>
