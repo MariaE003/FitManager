@@ -1,14 +1,16 @@
 <?php
 session_start();
 
-if(!isset($_SESSION['user'])) {
+if(!isset($_SESSION['id_user'])) {
     header("Location: auth/login.php");
     exit();
 }
-else{
-    header("Location: index.php");
-    exit();
-}
+// else{
+//     header("Location: index.php");
+//     exit();
+// }
+// session_unset();
+// session_destroy();
 ?>
 
 <?php

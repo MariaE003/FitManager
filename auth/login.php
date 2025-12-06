@@ -1,6 +1,7 @@
 <?php
 require "../nav.php";
 require "../connect.php";
+session_start();
 
 
 if (isset($_POST['login'])) {
@@ -8,9 +9,10 @@ if (isset($_POST['login'])) {
     $password=$_POST["password"];
     
     $sql="SELECT * FROM users WHERE email='$email' AND passwordUser='$password'";
-    echo $connet->query($sql);
-    if ($connet->query($sql)===true){
-        header("Location:../index.php");
+    // echo $connet->query($sql);
+    if ($connet->query($sql)){
+        $_SESSION["id_user"]=$email;
+        header("Location: ../index.php");
         exit();
     }
     // else{
