@@ -20,7 +20,7 @@ $connet->query($sqlDeleteEqui);
 $connet->query($sqlDeleteCours);
 if ($connet->query($sqlDeleteCours)) {
     // echo "supprision reusite de id du cours ".$_GET['id'];
-     header("Location:../index.php");
+     header("Location:../cours.php");
         exit();
 }
 }

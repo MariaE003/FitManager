@@ -1,4 +1,5 @@
 <?php
+require "../session.php";
 require "../nav.php";
 require "../connect.php";
 
@@ -56,7 +57,7 @@ if (isset($_POST['modifier'])) {
  $update="UPDATE equipements SET nom='$nom',typeEqui='$type',quantiteDispo='$quantite',etat='$etat' WHERE id=$id";
 //  $exec=$connet->query($update);
  if ($connet->query($update)) {
-    header("Location:../index.php");
+    header("Location:../equipements.php");
     exit();
  }
 }

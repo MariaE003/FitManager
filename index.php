@@ -1,10 +1,21 @@
 <?php
-session_start();
+// session_start();
 
-if(!isset($_SESSION['id_user'])) {
-    header("Location: auth/login.php");
-    exit();
-}
+// if(!isset($_SESSION['id_user'])) {
+//     header("Location: auth/login.php");
+//     exit();
+// }
+
+
+
+// // logout
+
+// if(isset($_POST["logout"])){
+//     session_unset();
+//     session_destroy();
+//     header("Location: auth/login.php");
+// }
+  
 // else{
 //     header("Location: index.php");
 //     exit();
@@ -14,7 +25,8 @@ if(!isset($_SESSION['id_user'])) {
 ?>
 
 <?php
-require "./nav.php";
+require "./session.php";
+require "nav.php";
 require "connect.php";
 //  echo "hi";
 // $insert="INSERT INTO cours(nom, catégorie, dateCours, heure, duree, nombreMaxParticipants) values('abc','abcCat','2003-06-12','11',1,15)";
@@ -319,16 +331,14 @@ require "connect.php";
         </div> 
 
         <!-- Cours Section -->
-        <div id="cours-section" class="content-section hidden">
+        <!-- <div id="cours-section" class="content-section hidden">
             <div class="bg-white p-8 rounded-xl shadow border">
                 <div class="flex justify-between items-center mb-6 pb-4 border-b-2 border-gray-100">
                     <h2 class="text-3xl font-bold text-primary">Gestion des Cours</h2>
                     <div class="flex flex-col">
-                       <!-- <label class="mb-2 text-gray-600 font-medium text-sm">Nom du Cours *</label> -->
                        <input type="text" placeholder="nom du cours" required name="nomcoursSearch"
                            class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                    </div>
-                   <!-- kan button et onclick="openModal('coursModal')" -->
                     <a href="./cours/add.php" 
                         class="px-6 py-3 bg-primary text-white rounded-lg transition-all hover:bg-secondary">
                         ➕ Ajouter un Cours
@@ -383,14 +393,12 @@ require "connect.php";
                                         <td class="px-4 py-4 text-gray-600"><?php echo $cours["nombreMaxParticipants"] ?></td>
                                         <td class="px-4 py-4">
                                             <div class="flex gap-2">
-                                                <!-- <form method="GET"> 
-                                                    onclick="openModal('updatecoursModal');event.preventDefault();"
-                                                -->
+                                                
                                                     <a href="./cours/edit.php?idEditCours=<?php echo $cours['id']?>"
                                                     name="modifierCours" class="px-4 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition modifierCours">Modifier</a>
                                                     
                                                     <a href="./cours/delete.php?id=<?php echo $cours['id']?>" class="px-4 py-1 bg-red-500 text-white rounded-lg hover:bg-red-400 transition supprimerCours">Supprimer</a>
-                                                <!-- </form> -->
+                                                
                                             </div>
                                         </td>
                                     </tr>
@@ -398,26 +406,26 @@ require "connect.php";
                                 }
                             } 
                             else {
-                                echo "aucun cours trouve";
+                                // echo "aucun cours trouve";
                             }
                             ?>
                         </tbody>
                     </table>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- Équipements Section -->
-        <div id="equipements-section" class="content-section hidden">
+        <!-- <div id="equipements-section" class="content-section hidden">
             <div class="bg-white p-8 rounded-xl shadow border">
                 <div class="flex justify-between items-center mb-6 pb-4 border-b-2 border-gray-100">
                     <h2 class="text-3xl font-bold text-primary">Gestion des Équipements</h2>
                     <div class="flex flex-col">
-                       <!-- <label class="mb-2 text-gray-600 font-medium text-sm">Nom du Cours *</label> -->
+                       <label class="mb-2 text-gray-600 font-medium text-sm">Nom du Cours *</label>
                        <input type="text" placeholder="nom du Equipement" required name="nomEquiSearch"
                            class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                    </div>
-                   <!-- onclick="openModal('equipementModal')" -->
+                   onclick="openModal('equipementModal')"
                     <a href="./equipements/add.php" 
                         class="px-6 py-3 bg-primary text-white rounded-lg transition-all hover:bg-secondary">
                         ➕ Ajouter un Équipement
@@ -467,17 +475,17 @@ require "connect.php";
                                     <?php
                                 }
                             } else {
-                                echo "aucun cours trouve";
+                                // echo "aucun cours trouve";
                             }
                             ?>
                         </tbody>
                     </table>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- Section Paramètres (basique) -->
-        <div id="parametres-section" class="content-section hidden">
+        <!-- <div id="parametres-section" class="content-section hidden">
             <div class="bg-white p-8 rounded-xl shadow border">
                 <h2 class="text-3xl font-bold mb-8 text-primary">Paramètres</h2>
                 <div class="space-y-4">
@@ -495,7 +503,7 @@ require "connect.php";
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </main>
 
     <!-- Modal Cours

@@ -1,4 +1,5 @@
 <?php
+// require "../session.php";
 require "../nav.php";
 require "../connect.php";
 

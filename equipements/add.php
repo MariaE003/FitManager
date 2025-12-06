@@ -1,4 +1,5 @@
 <?php
+require "../session.php";
 require "../nav.php";
 require "../connect.php";
 
@@ -20,7 +21,7 @@ if (isset($_POST["EnregistrerEqui"])) {
     // $abd=$connet->query($sql);
     if ($connet->query($sql) === true) {
         // echo "la insertion  reussite";
-        header("Location:../index.php");
+        header("Location:../equipements.php");
         exit();
     }
     }

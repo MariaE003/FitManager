@@ -1,7 +1,9 @@
  <?php
+ require "../session.php";
  require "../nav.php";
 require "../connect.php";
  
+$chapmsVide=false;
  
  // ajouter cours
 if (isset($_POST["EnregistrerCours"])) {
@@ -21,9 +23,12 @@ if (isset($_POST["EnregistrerCours"])) {
     // $abd=$connet->query($sql);
     if ($connet->query($sql)) {
         // echo "la insertion  reussite";
-        header("Location:../index.php");
+        header("Location:../cours.php");
         exit();
     }
+    }
+    else{
+       $chapmsVide=true;
     }
 }
 
@@ -47,6 +52,49 @@ if (isset($_POST["EnregistrerCours"])) {
             }
         }
     </script>
+    <style>
+        #toast-error {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+  font-size: 17px;
+}
+
+#toast-error.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;} 
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;} 
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+    </style>
  </head>
  <body>
     
@@ -94,6 +142,7 @@ if (isset($_POST["EnregistrerCours"])) {
                         class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary"
                         name="MaxParticipantCours">
                     </div>
+                    <div id="toast-error">tout les champ sont obligatoire</div>
                 </div>
                 <div class="mt-6 text-right">
                     <a href="../index.php"
@@ -103,10 +152,26 @@ if (isset($_POST["EnregistrerCours"])) {
                     <button type="submit"
                     class="px-6 py-3 bg-primary text-white rounded-lg transition-all hover:bg-secondary" name="EnregistrerCours">
                     Enregistrer
-                </button>
-            </div>
+                    </button>
+                </div>
         </form>
     </div>
 </div>
+<?php
+    if ($chapmsVide) {
+    ?>
+<script>
+    function toast(){
+        let div=document.querySelector('#toast-error');
+        div.className='show';
+        setTimeout(function(){
+            div.className=div.className.replace('show','');
+        },3000);
+    }    
+    toast();
+</script>
+<?php
+    }
+?>
 </body>
 </html>

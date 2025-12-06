@@ -1,6 +1,8 @@
 <?php
+// require "../session.php";
 require "../nav.php";
 require "../connect.php";
+
 session_start();
 
 
@@ -15,9 +17,7 @@ if (isset($_POST['login'])) {
         header("Location: ../index.php");
         exit();
     }
-    // else{
-
-    // }
+    
 }
 
 
@@ -54,12 +54,12 @@ if (isset($_POST['login'])) {
                 <div class="grid grid-cols-1 md:grid-cols-1 gap-5">
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">Email</label>
-                         <input type="text" placeholder="Ex: Tapis@gmail.com" required name ="email"
+                         <input type="text" placeholder="Ex: Tapis@gmail.com"  name ="email"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                     </div>
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">password</label>
-                        <input type="text" placeholder="EX : hT POt" required name="password"
+                        <input type="text" placeholder="EX : hT POt"  name="password"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                     </div>
                 </div>

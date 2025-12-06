@@ -1,5 +1,6 @@
  <!-- modal modifier cours -->
     <?php
+    // require "../session.php";
     require "../nav.php";
     require "../connect.php";
       if(isset($_GET['idEditCours'])){
@@ -56,7 +57,7 @@ if (isset($_POST['modifier'])) {
  $update="UPDATE cours SET nom='$nomCour',catégorie='$categorieCour',dateCours='$dateCours',heure='$heureCour',duree='$durreCour',nombreMaxParticipants='$MaxPartici'  WHERE id=$id";
 //  $exec=$connet->query($update);
  if ($connet->query($update)) {
-    header("Location:../index.php");
+    header("Location:../cours.php");
     exit();
  }
 }
