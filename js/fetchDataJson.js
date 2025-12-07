@@ -1,5 +1,5 @@
 // les cours
-fetch("./coursJson.php")
+fetch("./dataJsonForGraphe/coursJson.php")
     .then(response => response.json())
     .then(data => {
 
@@ -35,7 +35,7 @@ fetch("./coursJson.php")
 
 // les equipement selon type
 
-fetch('./EquipementsJson.php').then(res=>res.json()).then(data=>{
+fetch('./dataJsonForGraphe/EquipementsJson.php').then(res=>res.json()).then(data=>{
     const labelEqui=data.map(ele=>ele.typeEqui);
     const valuesEqui=data.map(ele=>ele.total);
 

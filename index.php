@@ -98,12 +98,12 @@ require "connect.php";
     
 
    <script>
-        window.onclick = function (event) {
-            if (event.target.classList.contains('fixed')) {
-                event.target.classList.add('hidden');
-                event.target.classList.remove('flex');
-            }
-        }
+        // window.onclick = function (event) {
+        //     if (event.target.classList.contains('fixed')) {
+        //         event.target.classList.add('hidden');
+        //         event.target.classList.remove('flex');
+        //     }
+        // }
     </script>
 </body>
 

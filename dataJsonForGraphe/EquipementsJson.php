@@ -1,5 +1,5 @@
 <?php
-require './connect.php';
+require '../connect.php';
 
 $sql="SELECT typeEqui,COUNT(*) as total FROM equipements GROUP BY typeEqui";
 // $sql="SELECT * FROM equipements ";
