@@ -66,7 +66,7 @@ require "connect.php";
                             $test = "SELECT * FROM equipements";
                            $abc = $connet->query($test);
                             $data = $abc->fetch_all(MYSQLI_ASSOC);
-                            if ($data > 0) {
+                            if (count($data) > 0) {
                                 foreach ($data as $qui) {
                                     // echo $qui['typeEqui'] . "<br>";
                                     ?>
@@ -88,10 +88,14 @@ require "connect.php";
                                         </td>
                                     </tr>
 
-                                    <?php
+                                <?php
                                 }
                             } else {
-                                echo "aucun cours trouve";
+                                echo 
+                                "<tr>
+                                    <td colspan='7' class='px-4 py-6 text-center text-gray-500'>aucun equipements trouve</td>
+                                </tr>                      
+                                ";
                             }
                             ?>
                         </tbody>

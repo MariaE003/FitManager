@@ -3,9 +3,6 @@ require "session.php";
 require "nav.php";
 require "connect.php";
 
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -40,7 +37,7 @@ require "connect.php";
                            class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                    </div>
                    <!-- kan button et onclick="openModal('coursModal')" -->
-                    <a href="/cours/add.php" 
+                    <a href="./cours/add.php" 
                         class="px-6 py-3 bg-primary text-white rounded-lg transition-all hover:bg-secondary">
                         ➕ Ajouter un Cours
                     </a>
@@ -94,14 +91,11 @@ require "connect.php";
                                         <td class="px-4 py-4 text-gray-600"><?php echo $cours["nombreMaxParticipants"] ?></td>
                                         <td class="px-4 py-4">
                                             <div class="flex gap-2">
-                                                <!-- <form method="GET"> 
-                                                    onclick="openModal('updatecoursModal');event.preventDefault();"
-                                                -->
                                                     <a href="./cours/edit.php?idEditCours=<?php echo $cours['id']?>"
                                                     name="modifierCours" class="px-4 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition modifierCours">Modifier</a>
                                                     
                                                     <a href="./cours/delete.php?id=<?php echo $cours['id']?>" class="px-4 py-1 bg-red-500 text-white rounded-lg hover:bg-red-400 transition supprimerCours">Supprimer</a>
-                                                <!-- </form> -->
+
                                             </div>
                                         </td>
                                     </tr>
@@ -109,7 +103,12 @@ require "connect.php";
                                 }
                             } 
                             else {
-                                echo "aucun cours trouve";
+
+                                echo "
+                                <tr>
+                                    <td colspan='7' class='px-4 py-6 text-center text-gray-500'>aucun cours trouve</td>
+                                </tr>
+                                ";
                             }
                             ?>
                         </tbody>

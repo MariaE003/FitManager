@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="myChart"></canvas>
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/chart.js"></script>
+    <!-- <script src="js/script.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+<script>
+fetch("./data.php")
+    .then(response => response.json())
+    .then(data => {
+
+        const labels = data.map(item => item.catégorie);
+
+        const values = data.map(item => item.total);
+
+        new Chart(document.getElementById("myChart"), {
+            type: "bar",
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: "Nombre de cours par catégorie",
+                    data: values,
+                    backgroundColor: "rgb(12 83 200)",
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks:{
+                            stepSize:1
+                        }
+                     }
+                }
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
