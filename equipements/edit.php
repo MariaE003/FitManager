@@ -82,10 +82,14 @@ if (isset($_POST['modifier'])) {
                         <label class="mb-2 text-gray-600 font-medium text-sm">Type *</label>
                         <select required name="type" value="<?php echo $equi['typeEqui'] ?>"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
-                            <option value="">Sélectionner...</option>
-                            <option>Cardio</option>
-                            <option>Musculation</option>
-                            <option>Yoga</option>
+                            <option value="Poids libres"<?= ($equi['typeEqui']=='Poids libres')?'selected':'' ?>>Poids libres</option>
+                            <option value="Haltères"<?= ($equi['typeEqui']=='Haltères')?'selected':'' ?>>Haltères</option>
+                            <option value="Barres olympiques"<?= ($equi['typeEqui']=='Barres olympiques')?'selected':'' ?>>Barres olympiques</option>
+                            <option value="Racks"<?= ($equi['typeEqui']=='Racks')?'selected':'' ?>>Racks</option>
+                            <option value="Smith Machine"<?= ($equi['typeEqui']=='Smith Machine')?'selected':'' ?>>Smith Machine</option>
+                            <option value="Kettlebells"<?= ($equi['typeEqui']=='Kettlebells')?'selected':'' ?>>Kettlebells</option>
+                            <option value="Banc de musculation"<?= ($equi['typeEqui']=='Banc de musculation')?'selected':'' ?>>Banc de musculation</option>
+                            <option value="Câbles & Poulies"<?= ($equi['typeEqui']=='Câbles & Poulies')?'selected':'' ?>>Câbles & Poulies</option>
                         </select>
                     </div>
                     <div class="flex flex-col">
@@ -97,10 +101,9 @@ if (isset($_POST['modifier'])) {
                         <label class="mb-2 text-gray-600 font-medium text-sm">État *</label>
                         <select required name="etat" value="<?php echo $equi['etat'] ?>"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
-                            <option value="">Sélectionner...</option>
-                            <option>Bon</option>
-                            <option>Moyen</option>
-                            <option>À remplacer</option>
+                            <option value="Bon" <?=$equi['etat']=='Bon'?'selected':''?>>Bon</option>
+                            <option value="Moyen" <?=$equi['etat']=='Moyen'?'selected':''?>>Moyen</option>
+                            <option value="À remplacer" <?=$equi['etat']=='À remplacer'?'selected':''?>>À remplacer</option>
                         </select>
                     </div>
                 </div>

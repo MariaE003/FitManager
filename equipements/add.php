@@ -76,9 +76,14 @@ else{
                         <select  name="type"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                             <option value="">Sélectionner...</option>
-                            <option>Cardio</option>
-                            <option>Musculation</option>
-                            <option>Yoga</option>
+                            <option value="Poids libres">Poids libres</option>
+                            <option value="Haltères">Haltères</option>
+                            <option value="Barres olympiques">Barres olympiques</option>
+                            <option value="Racks">Racks</option>
+                            <option value="Smith Machine">Smith Machine</option>
+                            <option value="Kettlebells">Kettlebells</option>
+                            <option value="Banc de musculation">Banc de musculation</option>
+                            <option value="Câbles & Poulies">Câbles & Poulies</option>
                         </select>
                     </div>
                     <div class="flex flex-col">
@@ -91,9 +96,9 @@ else{
                         <select  name="etat"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                             <option value="">Sélectionner...</option>
-                            <option>Bon</option>
-                            <option>Moyen</option>
-                            <option>À remplacer</option>
+                            <option value="Bon">Bon</option>
+                            <option value="Moyen">Moyen</option>
+                            <option value="À remplacer">À remplacer</option>
                         </select>
                     </div>
 
