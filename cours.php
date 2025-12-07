@@ -42,8 +42,9 @@ require "connect.php";
                         </form>
                    </div>
                    <!-- filter selon categories -->
+                    <!-- <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">Porro asperiores qui</span> -->
 
-                   <!-- kan button et onclick="openModal('coursModal')" -->
+                   
                     <a href="./cours/add.php" 
                         class="px-6 py-3 bg-primary text-white rounded-lg transition-all hover:bg-secondary">
                         ➕ Ajouter un Cours
@@ -76,7 +77,7 @@ require "connect.php";
                             //search
                             if (isset($_POST['nomcoursSearch'])) {
                                 $nomCours=$_POST['nomcoursSearch'];
-                                $cours="SELECT * FROM cours WHERE nom='$nomCours'";
+                                $cours="SELECT * FROM cours WHERE nom   LIKE '%$nomCours%'";
                                 $search=$connet->query($cours);
                                 $searchNom=$search->fetch_all(MYSQLI_ASSOC);
                                 
@@ -104,13 +105,7 @@ require "connect.php";
                                             </div>
                                         </td>
                                     </tr>
-                                    <!-- <tr>
-                                        <td>
-                                        <a class=" px-6 py-3 bg-primary text-white rounded-lg transition-all hover:bg-secondary"  href="./cours.php">
-                                            retour
-                                        </a>
-                                        </td>
-                                    </tr> -->
+                                    
                                     <?php
                                 }
                             }
