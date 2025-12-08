@@ -37,12 +37,17 @@ require "connect.php";
                             <input type="text" placeholder="nom du cours" required name="nomcoursSearch"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                             <a class=" px-6 py-3 bg-primary text-white rounded-lg transition-all hover:bg-secondary <?= isset($_POST["nomcoursSearch"])?'inline':'hidden'?>"  href="./cours.php">
-                                            retour
-                                        </a>
+                            retour
+                            </a>
                         </form>
                    </div>
                    <!-- filter selon categories -->
-                    <a href="./" name="" class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">Porro asperiores qui</a>
+                    <form action="" method="POST">
+                        <button  name="Cardio" value="Cardio" class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">Cardio</button>
+                        <button  name="Musculation" value="Musculation" class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">Musculation</button>
+                        <button  name="Fitness" value="Fitness" class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">Fitness</button>
+                        <a href="./cours.php" name="Porro asperiores qui" class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">All</a>
+                    </form>
 
                    
                     <a href="./cours/add.php" 
@@ -70,9 +75,18 @@ require "connect.php";
                         <tbody>
                             <?php
                             $test = "SELECT * FROM cours ";
+
                             if (isset($_POST['nomcoursSearch'])) {
                             $nomCours=$_POST['nomcoursSearch'];
                             $test = "SELECT * FROM cours WHERE nom LIKE '%$nomCours%'";
+                            }
+
+                            if (isset($_POST["Cardio"]) || isset($_POST["Musculation"]) || isset($_POST["Fitness"])) {
+
+                                $cardio=isset($_POST["Cardio"])?$_POST["Cardio"]:"";
+                                $musculation=isset($_POST["Musculation"])?$_POST["Musculation"]:"";
+                                $fitness=isset($_POST["Fitness"])?$_POST["Fitness"]:"";
+                            $test = "SELECT * FROM cours WHERE catégorie = '$cardio' OR catégorie='$musculation' OR catégorie='$fitness'";
                             }
 
                             $abc = $connet->query($test);

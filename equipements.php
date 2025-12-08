@@ -38,8 +38,8 @@ require "connect.php";
                             <input type="text" placeholder="nom du equipements" required name="nomEquiSearch"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                             <a class=" px-6 py-3 bg-primary text-white rounded-lg transition-all hover:bg-secondary <?= isset($_POST["nomEquiSearch"])?'inline':'hidden'?>"  href="./equipements.php">
-                                            retour
-                                        </a>
+                            retour
+                            </a>
                         </form>
                    </div>
                    <!-- onclick="openModal('equipementModal')" -->
