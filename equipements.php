@@ -65,20 +65,26 @@ require "connect.php";
                         <tbody>
                             <?php
                             $test = "SELECT * FROM equipements";
+                            if (isset($_POST['nomEquiSearch'])) {
+                                
+                                $nomEqui=trim($_POST['nomEquiSearch']);
+                                // $test = "SELECT * FROM equipements" ;
+                                $test="SELECT * FROM equipements WHERE nom LIKE '%$nomEqui%'";
+                            }
                             $abc = $connet->query($test);
                             $data = $abc->fetch_all(MYSQLI_ASSOC);
 
                             //search
-                            if (isset($_POST['nomEquiSearch'])) {
-                                $nomEqui=trim($_POST['nomEquiSearch']);
-                                // echo $nomEqui;
-                                $equi="SELECT * FROM equipements WHERE nom LIKE '%$nomEqui%'";
-                                $search=$connet->query($equi);
-                                $searchNomEqui=$search->fetch_all(MYSQLI_ASSOC);
+                            // if (isset($_POST['nomEquiSearch'])) {
+                            //     $nomEqui=trim($_POST['nomEquiSearch']);
+                            //     // echo $nomEqui;
+                            //     $equi="SELECT * FROM equipements WHERE nom LIKE '%$nomEqui%'";
+                            //     $search=$connet->query($equi);
+                            //     $searchNomEqui=$search->fetch_all(MYSQLI_ASSOC);
                                
-                                foreach($searchNomEqui as $searchNom ){
+                            //     foreach($searchNomEqui as $searchNom ){
                                 ?>
-                                 <tr class="border-b hover:bg-gray-50">
+                                 <!-- <tr class="border-b hover:bg-gray-50">
                                         <td class="px-4 py-4 text-gray-600"><?= $searchNom["nom"] ?></td>
                                         <td class="px-4 py-4">
                                             <span
@@ -94,12 +100,12 @@ require "connect.php";
                                                     <a href="./equipements/delete.php?idEqui=<?php echo $searchNom['id']?>" class="px-4 py-1 bg-red-500 text-white rounded-lg hover:bg-red-400 transition supprimerCours">Supprimer</a>
                                             </div>
                                         </td>
-                                    </tr>
+                                    </tr> -->
 
                                     <?php
-                                }
-                            }
-                            else{
+                            //     }
+                            // }
+                            // else{
                             if (count($data) > 0) {
                                 foreach ($data as $qui) {
                                     // echo $qui['typeEqui'] . "<br>";
@@ -130,7 +136,8 @@ require "connect.php";
                                     <td colspan='7' class='px-4 py-6 text-center text-gray-500'>aucun equipements trouve</td>
                                 </tr>                      
                                 ";
-                            }}
+                            }
+                        // }
                             ?>
                         </tbody>
                     </table>

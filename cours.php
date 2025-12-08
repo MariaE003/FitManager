@@ -42,7 +42,7 @@ require "connect.php";
                         </form>
                    </div>
                    <!-- filter selon categories -->
-                    <!-- <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">Porro asperiores qui</span> -->
+                    <a href="./" name="" class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">Porro asperiores qui</a>
 
                    
                     <a href="./cours/add.php" 
@@ -69,23 +69,25 @@ require "connect.php";
                         </thead>
                         <tbody>
                             <?php
-                            $test = "SELECT * FROM cours";
+                            $test = "SELECT * FROM cours ";
+                            if (isset($_POST['nomcoursSearch'])) {
+                            $nomCours=$_POST['nomcoursSearch'];
+                            $test = "SELECT * FROM cours WHERE nom LIKE '%$nomCours%'";
+                            }
 
                             $abc = $connet->query($test);
                             $data = $abc->fetch_all(MYSQLI_ASSOC);
                             
                             //search
-                            if (isset($_POST['nomcoursSearch'])) {
-                                $nomCours=$_POST['nomcoursSearch'];
-                                $cours="SELECT * FROM cours WHERE nom   LIKE '%$nomCours%'";
-                                $search=$connet->query($cours);
-                                $searchNom=$search->fetch_all(MYSQLI_ASSOC);
+                            //     $cours="SELECT * FROM cours WHERE nom   LIKE '%$nomCours%'";
+                            //     $search=$connet->query($cours);
+                            //     $searchNom=$search->fetch_all(MYSQLI_ASSOC);
                                 
-                                foreach($searchNom as $searchNom ){
-                                    $time = $searchNom["heure"];
-                                    $heurMinute = date("H:i", strtotime($time));
+                            //     foreach($searchNom as $searchNom ){
+                            //         $time = $searchNom["heure"];
+                            //         $heurMinute = date("H:i", strtotime($time));
                                 ?>
-                                 <tr class="border-b hover:bg-gray-50">
+                                 <!-- <tr class="border-b hover:bg-gray-50">
                                         <td class="px-4 py-4 text-gray-600"><?= $searchNom["nom"] ?></td>
                                         <td class="px-4 py-4">
                                             <span
@@ -105,11 +107,11 @@ require "connect.php";
                                             </div>
                                         </td>
                                     </tr>
-                                    
+                                     -->
                                     <?php
-                                }
-                            }
-                            else{
+                            //     }
+                            // }
+                            // else{
                             if (count($data) > 0 ) {
                                 foreach ($data as $cours) {
                                     // echo $cours['id'] . "<br>";
@@ -147,7 +149,8 @@ require "connect.php";
                                     <td colspan='7' class='px-4 py-6 text-center text-gray-500'>aucun cours trouve</td>
                                 </tr>
                                 ";
-                            }}
+                            }
+                        // }
                             ?>
                         </tbody>
                     </table>
