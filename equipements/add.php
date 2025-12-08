@@ -4,7 +4,9 @@ require "../nav.php";
 require "../connect.php";
 
 $chapmsVide=false;
-
+$name=false;
+$$name=false;
+$Quantite=false;
 // ajouter equipement
 if (isset($_POST["EnregistrerEqui"])) {
     if (!empty($_POST["nom"]) && !empty($_POST["type"]) && !empty($_POST["quantite"]) && !empty($_POST["etat"])){
@@ -16,15 +18,22 @@ if (isset($_POST["EnregistrerEqui"])) {
         // echo $nom;
     //   echo "les champ sont obligatoire";
     //   echo "nadddddiiiia";
-    
-    $sql="INSERT INTO equipements(nom,typeEqui,quantiteDispo,etat) VALUES('$nom','$typeE','$quantite','$etat')";
-    // echo $nom ,$categorieCours , $dateCours,$heureCours,$durreCours,$MaxParticipantCours;
+    if (strlen($nom)<5 ){
+            $name=true;
+    }elseif ($quantite<1) {
+       $Quantite=true;
+    }
+    else{
 
-    // $abd=$connet->query($sql);
-    if ($connet->query($sql) === true) {
-        // echo "la insertion  reussite";
-        header("Location:../equipements.php");
-        exit();
+        $sql="INSERT INTO equipements(nom,typeEqui,quantiteDispo,etat) VALUES('$nom','$typeE','$quantite','$etat')";
+        // echo $nom ,$categorieCours , $dateCours,$heureCours,$durreCours,$MaxParticipantCours;
+    
+        // $abd=$connet->query($sql);
+        if ($connet->query($sql) === true) {
+            // echo "la insertion  reussite";
+            header("Location:../equipements.php");
+            exit();
+        }
     }
 }
 else{
@@ -102,7 +111,7 @@ else{
                         </select>
                     </div>
 
-                    <div id="toast-error">tout les champ sont obligatoire</div>
+                    <div id="toast-error"></div>
 
                 </div>
                 <div class="mt-6 text-right">
@@ -124,6 +133,7 @@ else{
 <script>
     function toast(){
         let div=document.querySelector('#toast-error');
+        div.innerHTML="tout les champs sont obligatoir";
         div.className='show';
         setTimeout(function(){
             div.className=div.className.replace('show','');
@@ -133,6 +143,37 @@ else{
 </script>
 <?php
     }
+    if ($name) {
+        ?>
+        <script>
+        function toastName(){
+        let div=document.querySelector('#toast-error');
+        div.innerHTML="le nom  doit contient plus des 5 caractere.";
+        div.className='show';
+        setTimeout(function(){
+            div.className=div.className.replace('show','');
+        },3000);
+    }    
+    toastName();
+    </script>
+    <?php
+    }
+    if ($Quantite) {
+       ?>
+       <script>
+        function toastquantite(){
+        let div=document.querySelector('#toast-error');
+        div.innerHTML="la quantite doit contient un nombre superier a 0";
+        div.className='show';
+        setTimeout(function(){
+            div.className=div.className.replace('show','');
+        },3000);
+    }    
+    toastquantite();
+       </script>
+       <?php
+    }
 ?>
-    </body>
 
+</body>
+</html>

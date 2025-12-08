@@ -4,6 +4,9 @@
 require "../connect.php";
  
 $chapmsVide=false;
+$Participant=false;
+$durre=false;
+$nameAndCategorie=false;
  
  // ajouter cours
 if (isset($_POST["EnregistrerCours"])) {
@@ -15,17 +18,27 @@ if (isset($_POST["EnregistrerCours"])) {
         $durreCours=$_POST["durreCours"];
         $MaxParticipantCours=$_POST["MaxParticipantCours"];
         // echo $nom;
-    //   echo "les champ sont obligatoire";
-    //   echo "nadddddiiiia";
-    $sql="INSERT INTO cours(nom,catégorie,dateCours,heure,duree,nombreMaxParticipants) VALUES('$nom','$categorieCours','$dateCours','$heureCours','$durreCours','$MaxParticipantCours')";
-    // echo $nom ,$categorieCours , $dateCours,$heureCours,$durreCours,$MaxParticipantCours;
-
-    // $abd=$connet->query($sql);
-    if ($connet->query($sql)) {
-        // echo "la insertion  reussite";
-        header("Location:../cours.php");
-        exit();
-    }
+        if ($MaxParticipantCours<5) {
+            $Participant=true;
+        }elseif($durreCours<30){
+            $durre=true;
+        }elseif (strlen($nom)<5 || strlen($categorieCours)<5) {
+            $nameAndCategorie=true;
+        }
+        else{
+            // else{
+    
+                $sql="INSERT INTO cours(nom,catégorie,dateCours,heure,duree,nombreMaxParticipants) VALUES('$nom','$categorieCours','$dateCours','$heureCours','$durreCours','$MaxParticipantCours')";
+            // }
+        // echo $nom ,$categorieCours , $dateCours,$heureCours,$durreCours,$MaxParticipantCours;
+    
+        // $abd=$connet->query($sql);
+        if ($connet->query($sql)) {
+            // echo "la insertion  reussite";
+            header("Location:../cours.php");
+            exit();
+        }
+        }
     }
     else{
        $chapmsVide=true;
@@ -40,7 +53,6 @@ if (isset($_POST["EnregistrerCours"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../style/style.css">
     <script>
         tailwind.config = {
             theme: {
@@ -52,9 +64,10 @@ if (isset($_POST["EnregistrerCours"])) {
                 }
             }
         }
-    </script>
-    <style>
-        /* #toast-error {
+        </script>
+    <!-- <link rel="stylesheet" href="../style/style.css"> -->
+     <style>
+          #toast-error,#maxParticipants {
   visibility: hidden;
   min-width: 250px;
   margin-left: -125px;
@@ -69,8 +82,7 @@ if (isset($_POST["EnregistrerCours"])) {
   bottom: 30px;
   font-size: 17px;
 }
-
-#toast-error.show {
+#toast-error.show,#maxParticipants.show {
   visibility: visible;
   -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
   animation: fadein 0.5s, fadeout 0.5s 2.5s;
@@ -94,20 +106,18 @@ if (isset($_POST["EnregistrerCours"])) {
 @keyframes fadeout {
   from {bottom: 30px; opacity: 1;}
   to {bottom: 0; opacity: 0;}
-} */
-    </style>
- </head>
+}
+     </style>
+     </head>
  <body>
     
-     <!-- Modal Cours -->
+     <!-- Cours -->
      <div id="coursModal" class="flex   items-center justify-center">
         <div class="bg-white p-8 rounded-xl max-w-2xl w-11/12 max-h-screen overflow-y-auto">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold text-gray-800">Ajouter un Cours</h2>
-                <!-- <button onclick="closeModal('coursModal')"
-                class="text-3xl text-gray-400 hover:text-gray-800 border-0 bg-transparent">×</button> -->
             </div>
-            <form method="POST" >
+            <form method="POST">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div class="flex flex-col">
                         <label class="mb-2 text-gray-600 font-medium text-sm">Nom du Cours *</label>
@@ -143,7 +153,10 @@ if (isset($_POST["EnregistrerCours"])) {
                         class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary"
                         name="MaxParticipantCours">
                     </div>
-                    <div id="toast-error">tout les champ sont obligatoire</div>
+                    <!-- <div id="toast-error">tout les champ sont obligatoire</div>
+                    <div id="maxParticipants">le champs des participant doit contient plus de 5 personne</div> -->
+                   <div id="toast-error"></div>
+
                 </div>
                 <div class="mt-6 text-right">
                     <a href="../cours.php"
@@ -162,17 +175,69 @@ if (isset($_POST["EnregistrerCours"])) {
     if ($chapmsVide) {
     ?>
 <script>
+    
     function toast(){
         let div=document.querySelector('#toast-error');
+        div.innerHTML="tous les champs sont obligatoir";
         div.className='show';
         setTimeout(function(){
             div.className=div.className.replace('show','');
         },3000);
     }    
     toast();
-</script>
+    </script>
 <?php
     }
-?>
+    if ($Participant) {
+        ?>
+        <script>
+        function toastParticipant(){
+        let div=document.querySelector('#toast-error');
+        div.innerHTML="le champs des participant doit contient plus de 5 personne ";
+        div.classList.add('show');
+        setTimeout(function(){
+            div.className=div.className.replace('show','');
+        },3000);
+    }    
+    toastParticipant();
+    
+    </script>
+    <?php
+    }
+    if ($durre) {
+    ?>
+    <script>
+        function toastDuree(){
+        let div=document.querySelector('#toast-error');
+        div.innerHTML="la durrer doit etre superieure a 30 minute";
+        div.classList.add('show');
+        setTimeout(function(){
+            div.className=div.className.replace('show','');
+        },3000);
+    }    
+    toastDuree();
+    </script>
+    <?php
+    }
+    if ($nameAndCategorie) {   
+    ?>
+    <script>
+        function toastnameCat(){
+        let div=document.querySelector('#toast-error');
+        div.innerHTML="le nom et la categorie doit contient plus des 5 caractere.";
+        div.classList.add('show');
+        setTimeout(function(){
+            div.className=div.className.replace('show','');
+        },3000);
+    }    
+    toastnameCat();
+    </script>
+    <?php
+    }
+    // if ($nameAndCategorie) {   
+    ?>
+
+
+
 </body>
 </html>
