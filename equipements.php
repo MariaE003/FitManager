@@ -42,6 +42,13 @@ require "connect.php";
                             </a>
                         </form>
                    </div>
+                   <form action="" method="POST">
+                        <button  name="Haltères" value="Haltères" class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">Haltères</button>
+                        <button  name="Racks" value="Racks" class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">Racks</button>
+                        <button  name="CâblesPoulies" value="Câbles & Poulies" class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">Câbles & Poulies</button>
+                        <a href="./equipements.php"  class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">ALL</a>
+                   </form>
+
                    <!-- onclick="openModal('equipementModal')" -->
                     <a href="./equipements/add.php" 
                         class="px-6 py-3 bg-primary text-white rounded-lg transition-all hover:bg-secondary">
@@ -70,6 +77,12 @@ require "connect.php";
                                 $nomEqui=trim($_POST['nomEquiSearch']);
                                 // $test = "SELECT * FROM equipements" ;
                                 $test="SELECT * FROM equipements WHERE nom LIKE '%$nomEqui%'";
+                            }
+                            if (isset($_POST["Haltères"]) || isset($_POST["Racks"]) || isset($_POST['CâblesPoulies'])) {
+                                $halteres=isset($_POST["Haltères"])?$_POST["Haltères"]:"";
+                                $racks=isset($_POST["Racks"])?$_POST["Racks"]:"";
+                                $cables_Poulies=isset($_POST["CâblesPoulies"])?$_POST["CâblesPoulies"]:"";
+                                $test="SELECT * FROM equipements WHERE typeEqui='$halteres' OR typeEqui='$racks' OR typeEqui='$cables_Poulies'";
                             }
                             $abc = $connet->query($test);
                             $data = $abc->fetch_all(MYSQLI_ASSOC);
