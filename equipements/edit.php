@@ -2,13 +2,18 @@
 require "../session.php";
 require "../nav.php";
 require "../connect.php";
-
-      if(isset($_GET['idEquiUpdate'])){
+$chapmsVide=false;
+$name=false;
+$$name=false;
+$Quantite=false;
+// modifier un equipement
+if(isset($_GET['idEquiUpdate'])){
         // $javascript = 
         // echo "<script>openModal('updatecoursModal')</script>";
         // embedJavaScript($javascript);
 // /echo "id clicabe : ".$_GET['id'];
 $id=$_GET['idEquiUpdate'];
+
 // echo $id;
 $sqlUpdate="SELECT * FROM equipements WHERE id=$id";
 
@@ -26,6 +31,8 @@ foreach($abc as $equi){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../style/style.css">
+
     <script>
         tailwind.config = {
             theme: {
@@ -44,22 +51,45 @@ foreach($abc as $equi){
      <?php
     }
 }
+$chapmsVide=false;
+$name=false;
+$$name=false;
+$Quantite=false;
 if (isset($_POST['modifier'])) {
 //    $id= $_POST["idCours"];
     
-    $nom=$_POST["nom"];
-    $type=$_POST["type"];
-    $quantite=$_POST["quantite"];
-    $etat=$_POST["etat"];
-    // $durreCour=$_POST["durreCoursAmodifier"];
-    // $MaxPartici=$_POST["MaxParticipantCoursAmodifier"];
+    // $nom=$_POST["nom"];
+    // $type=$_POST["type"];
+    // $quantite=$_POST["quantite"];
+    // $etat=$_POST["etat"];
 
+
+    
+if (!empty($_POST["nom"]) && !empty($_POST["type"]) && !empty($_POST["quantite"]) && !empty($_POST["etat"])){
+        $nom=$_POST["nom"];
+        $typeE=$_POST["type"];
+        $quantite=$_POST["quantite"];
+        $etat=$_POST["etat"];
+       
+        // echo $nom;
+    //   echo "les champ sont obligatoire";
+    //   echo "nadddddiiiia";
+    if (strlen($nom)<5 ){
+            $name=true;
+    }elseif ($quantite<1) {
+       $Quantite=true;
+    }
+    else{
  $update="UPDATE equipements SET nom='$nom',typeEqui='$type',quantiteDispo='$quantite',etat='$etat' WHERE id=$id";
 //  $exec=$connet->query($update);
  if ($connet->query($update)) {
     header("Location:../equipements.php");
     exit();
  }
+}}
+else{
+       $chapmsVide=true;
+    }
 }
 
     ?>
@@ -106,6 +136,8 @@ if (isset($_POST['modifier'])) {
                             <option value="À remplacer" <?=$equi['etat']=='À remplacer'?'selected':''?>>À remplacer</option>
                         </select>
                     </div>
+                    <div id="toast-error"></div>
+
                 </div>
                 <div class="mt-6 text-right">
                     <a href="../index.php"
@@ -120,6 +152,53 @@ if (isset($_POST['modifier'])) {
             </form>
         </div>
     </div>
+    <?php
+    if ($chapmsVide) {
+    ?>
+<script>
+    function toast(){
+        let div=document.querySelector('#toast-error');
+        div.innerHTML="tout les champs sont obligatoir";
+        div.className='show';
+        setTimeout(function(){
+            div.className=div.className.replace('show','');
+        },3000);
+    }    
+    toast();
+</script>
+<?php
+    }
+    if ($name) {
+        ?>
+        <script>
+        function toastName(){
+        let div=document.querySelector('#toast-error');
+        div.innerHTML="le nom  doit contient plus des 5 caractere.";
+        div.className='show';
+        setTimeout(function(){
+            div.className=div.className.replace('show','');
+        },3000);
+    }    
+    toastName();
+    </script>
+    <?php
+    }
+    if ($Quantite) {
+       ?>
+       <script>
+        function toastquantite(){
+        let div=document.querySelector('#toast-error');
+        div.innerHTML="la quantite doit contient un nombre superier a 0";
+        div.className='show';
+        setTimeout(function(){
+            div.className=div.className.replace('show','');
+        },3000);
+    }    
+    toastquantite();
+       </script>
+       <?php
+    }
+?>
 
 
     </body>

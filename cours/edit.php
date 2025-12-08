@@ -9,6 +9,7 @@
         // embedJavaScript($javascript);
 // /echo "id clicabe : ".$_GET['id'];
 $id=$_GET['idEditCours'];
+
 // echo $id;
 $sqlUpdate="SELECT * FROM cours WHERE id=$id";
 
@@ -26,6 +27,8 @@ foreach($abc as $cours){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../style/style.css">
+
     <script>
         tailwind.config = {
             theme: {
@@ -44,22 +47,39 @@ foreach($abc as $cours){
     <?php
     }
 }
+$Participant=false;
+$durre=false;
+$nameAndCategorie=false;
+$MaxParticipantCours=false;
+$chapmsVide=false;
 if (isset($_POST['modifier'])) {
    $id= $_POST["idCours"];
-    
+    if (!empty($_POST["nomCoursAmodifier"]) && !empty($_POST["categorieCoursAmodifier"]) && !empty($_POST["dateCoursAmodifier"])&& !empty($_POST["heureCoursAmodifier"]) && !empty($_POST["durreCoursAmodifier"]) && !empty($_POST["MaxParticipantCoursAmodifier"]) ){
+
     $nomCour=$_POST["nomCoursAmodifier"];
     $categorieCour=$_POST["categorieCoursAmodifier"];
     $dateCours=$_POST["dateCoursAmodifier"];
     $heureCour=$_POST["heureCoursAmodifier"];
     $durreCour=$_POST["durreCoursAmodifier"];
     $MaxPartici=$_POST["MaxParticipantCoursAmodifier"];
-
- $update="UPDATE cours SET nom='$nomCour',catégorie='$categorieCour',dateCours='$dateCours',heure='$heureCour',duree='$durreCour',nombreMaxParticipants='$MaxPartici'  WHERE id=$id";
+    if ($MaxPartici<5) {
+        $Participant=true;
+    }elseif($durreCour<30){
+        $durre=true;
+    }elseif (strlen($nomCour)<5 || strlen($categorieCour)<5) {
+        $nameAndCategorie=true;
+    }
+    else{
+    $update="UPDATE cours SET nom='$nomCour',catégorie='$categorieCour',dateCours='$dateCours',heure='$heureCour',duree='$durreCour',nombreMaxParticipants='$MaxPartici'  WHERE id=$id";
 //  $exec=$connet->query($update);
- if ($connet->query($update)) {
-    header("Location:../cours.php");
-    exit();
- }
+    if ($connet->query($update)) {
+        header("Location:../cours.php");
+        exit();
+    }
+    }}
+    else{
+       $chapmsVide=true;
+    }
 }
 
     ?>
@@ -107,6 +127,7 @@ if (isset($_POST['modifier'])) {
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary"
                             name="MaxParticipantCoursAmodifier">
                     </div>
+                   <div id="toast-error"></div>
                 </div>
                 <div class="mt-6 text-right">
                     <a href="../index.php"
@@ -121,5 +142,71 @@ if (isset($_POST['modifier'])) {
             </form>
         </div>
     </div>
+
+    <!-- les taost -->
+     <?php
+    if ($chapmsVide) {
+    ?>
+<script>
+    
+    function toast(){
+        let div=document.querySelector('#toast-error');
+        div.innerHTML="tous les champs sont obligatoir";
+        div.className='show';
+        setTimeout(function(){
+            div.className=div.className.replace('show','');
+        },3000);
+    }    
+    toast();
+    </script>
+<?php
+    }
+    if ($Participant) {
+        ?>
+        <script>
+        function toastParticipant(){
+        let div=document.querySelector('#toast-error');
+        div.innerHTML="le champs des participant doit contient plus de 5 personne ";
+        div.classList.add('show');
+        setTimeout(function(){
+            div.className=div.className.replace('show','');
+        },3000);
+    }    
+    toastParticipant();
+    
+    </script>
+    <?php
+    }
+    if ($durre) {
+    ?>
+    <script>
+        function toastDuree(){
+        let div=document.querySelector('#toast-error');
+        div.innerHTML="la durrer doit etre superieure a 30 minute";
+        div.classList.add('show');
+        setTimeout(function(){
+            div.className=div.className.replace('show','');
+        },3000);
+    }    
+    toastDuree();
+    </script>
+    <?php
+    }
+    if ($nameAndCategorie) {   
+    ?>
+    <script>
+        function toastnameCat(){
+        let div=document.querySelector('#toast-error');
+        div.innerHTML="le nom et la categorie doit contient plus des 5 caractere.";
+        div.classList.add('show');
+        setTimeout(function(){
+            div.className=div.className.replace('show','');
+        },3000);
+    }    
+    toastnameCat();
+    </script>
+    <?php
+    }   
+    ?>
 
 </body>
