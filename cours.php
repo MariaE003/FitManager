@@ -11,7 +11,7 @@ require "connect.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sport Manager - Gestion Salle de Sport</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="./src/output.css" rel="stylesheet">
+    <!-- <link href="./src/output.css" rel="stylesheet"> -->
 
     <script>
         tailwind.config = {
@@ -103,27 +103,7 @@ require "connect.php";
                             //         $time = $searchNom["heure"];
                             //         $heurMinute = date("H:i", strtotime($time));
                                 ?>
-                                 <!-- <tr class="border-b hover:bg-gray-50">
-                                        <td class="px-4 py-4 text-gray-600"><?= $searchNom["nom"] ?></td>
-                                        <td class="px-4 py-4">
-                                            <span
-                                                class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium"><?= $searchNom["catégorie"] ?></span>
-                                        </td>
-                                        <td class="px-4 py-4 text-gray-600"><?=  $searchNom["dateCours"] ?></td>
-                                        <td class="px-4 py-4 text-gray-600"><?= $heurMinute ?></td>
-                                        <td class="px-4 py-4 text-gray-600"><?= $searchNom["duree"] ?></td>
-                                        <td class="px-4 py-4 text-gray-600"><?= $searchNom["nombreMaxParticipants"] ?></td>
-                                        <td class="px-4 py-4">
-                                            <div class="flex gap-2">
-                                                    <a href="./cours/edit.php?idEditCours=<?= $searchNom['id']?>"
-                                                    name="modifierCours" class="px-4 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition modifierCours">Modifier</a>
-                                                    
-                                                    <a href="./cours/delete.php?id=<?= $searchNom['id']?>" class="px-4 py-1 bg-red-500 text-white rounded-lg hover:bg-red-400 transition supprimerCours">Supprimer</a>
-
-                                            </div>
-                                        </td>
-                                    </tr>
-                                     -->
+                                 
                                     <?php
                             //     }
                             // }
@@ -147,9 +127,8 @@ require "connect.php";
                                         <td class="px-4 py-4 text-gray-600"><?php echo $cours["nombreMaxParticipants"] ?></td>
                                         <td class="px-4 py-4">
                                             <div class="flex gap-2">
-                                                    <a href="./cours/edit.php?idEditCours=<?php echo $cours['id']?>"
-                                                    name="modifierCours" class="px-4 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition modifierCours">Modifier</a>
-                                                    
+                                                    <a href="./EquipementDuCours.php?idCours=<?php echo $cours['id']?>" name="modifierCours" class="px-4 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition voirEquipement">voir equipements</a>
+                                                    <a href="./cours/edit.php?idEditCours=<?php echo $cours['id']?>" name="modifierCours" class="px-4 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition modifierCours">Modifier</a>
                                                     <a href="./cours/delete.php?id=<?php echo $cours['id']?>" class="px-4 py-1 bg-red-500 text-white rounded-lg hover:bg-red-400 transition supprimerCours">Supprimer</a>
 
                                             </div>
