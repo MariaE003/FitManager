@@ -28,6 +28,8 @@ foreach($abc as $cours){
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../style/style.css">
+    <!-- <link href="../src/output.css" rel="stylesheet"> -->
+
 
     <script>
         tailwind.config = {

@@ -3,7 +3,13 @@
 
 require "../nav.php";
 require "../connect.php";
+
 $chapmsVide=false;
+$nomInValide=false;
+$passWordInValide=false;
+$emailInValide=false;
+$PhoneInValide=false;
+
 if (isset($_POST['inscrire'])) {
     if (!empty($_POST["nom"]) && !empty($_POST["email"])&& !empty($_POST["password"])&& !empty($_POST["phone"])&& !empty($_POST["dateNais"])) {
         $nom=$_POST["nom"];
@@ -11,12 +17,27 @@ if (isset($_POST['inscrire'])) {
         $password=$_POST["password"];
         $phone=$_POST["phone"];
         $dateNais=$_POST["dateNais"];
+        
+        $virifierEmail=filter_var($_POST["email"],FILTER_VALIDATE_EMAIL);
+        if (strlen($nom)<5 ){
+            $nomInValide=true;
+        }
+        elseif (strlen($password)<6){
+            $passWordInValide=true;
+        }
+        elseif ($virifierEmail===false) {
+            $emailInValide=true;
+        }elseif ($phone<10) {
+            $PhoneInValide=true;
+        }
+        else{
         $sql="INSERT INTO users(name,email,passwordUser,phone,dateNais) VALUES ('$nom','$email','$password','$phone','$dateNais')";
         if ($connet->query($sql)){
             header("Location: login.php");
             exit();
         }
         }
+    }
     else{
   $chapmsVide=true;
     }
@@ -32,7 +53,10 @@ if (isset($_POST['inscrire'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../style/style.css">
+    <!-- <link href="../src/output.css" rel="stylesheet"> -->
+
     <script src="https://cdn.tailwindcss.com"></script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -80,8 +104,7 @@ if (isset($_POST['inscrire'])) {
                         <input type="date" placeholder="Ex: 2003/06/12"  name ="dateNais"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                     </div>
-                    <div id="toast-error">tout les champ sont obligatoire</div>
-
+                   <div id="toast-error"></div>
                 </div>
                 <div class="mt-6 text-right">
                     <a href="./login.php"
@@ -102,6 +125,8 @@ if (isset($_POST['inscrire'])) {
 <script>
     function toast(){
         let div=document.querySelector('#toast-error');
+        div.innerHTML="tous les champs sont obligatoire!";
+
         div.className='show';
         setTimeout(function(){
             div.className=div.className.replace('show','');
@@ -111,6 +136,67 @@ if (isset($_POST['inscrire'])) {
 </script>
 <?php
     }
-?>
+    if ($passWordInValide) {
+        ?>
+        <script>
+        function toastPw(){
+        let div=document.querySelector('#toast-error');
+        div.innerHTML="mot de passe faible !";
+        div.classList.add('show');
+        setTimeout(function(){
+            div.className=div.className.replace('show','');
+        },3000);
+    }    
+    toastPw();
+    
+    </script>
+    <?php
+    }
+    if ($emailInValide) {
+    ?>
+    <script>
+        function toastEmail(){
+        let div=document.querySelector('#toast-error');
+        div.innerHTML="email invalide";
+        div.classList.add('show');
+        setTimeout(function(){
+            div.className=div.className.replace('show','');
+        },3000);
+    }    
+    toastEmail();
+    </script>
+    <?php
+    }
+    if ($nomInValide) {   
+    ?>
+    <script>
+        function toastname(){
+        let div=document.querySelector('#toast-error');
+        div.innerHTML="le nom doit contient plus des 5 caractere.";
+        div.classList.add('show');
+        setTimeout(function(){
+            div.className=div.className.replace('show','');
+        },3000);
+    }    
+    toastname();
+    </script>
+    <?php
+    }
+    if ($PhoneInValide){   
+    ?>
+    <script>
+        function toastPhone(){
+        let div=document.querySelector('#toast-error');
+        div.innerHTML="numero de telephone invalide! ";
+        div.classList.add('show');
+        setTimeout(function(){
+            div.className=div.className.replace('show','');
+        },3000);
+    }    
+    toastPhone();
+    </script>
+    <?php
+    }  
+    ?>
     </body>
 

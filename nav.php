@@ -2,12 +2,8 @@
         <h1 class="text-2xl font-bold text-primary">Sport Manager</h1>
         <ul class="flex gap-8 text-lg font-medium">
             <li>
-                <!-- <button onclick="showSection('dashboard')"
-                    class="nav-btn text-black px-3 py-1 rounded-lg bg-primary  active">
-                    Dashboard
-                </button> -->
                 <a href="/"
-                    class="nav-btn text-black px-3 py-1 rounded-lg bg-primary  active">
+                    class="nav-btn text-black px-3 py-1 rounded-lg bg-primary  ">
                     Dashboard
                 </a>
             </li>
@@ -24,10 +20,7 @@
                 </a>
             </li>
             <li>
-                <!-- onclick="showSection('parametres')"  -->
-                 
                  <form action="" method="POST">       
-
                      <button type="submit" name="logout" 
                          class="nav-btn px-3 py-1 rounded-lg hover:bg-blue-100 transition cursor-pointer <?= isset($_SESSION["id_user"])?"block":"hidden"?>">
                          deconnecter

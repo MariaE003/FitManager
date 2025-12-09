@@ -11,6 +11,8 @@ require "connect.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sport Manager - Gestion Salle de Sport</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="./src/output.css" rel="stylesheet">
+
     <script>
         tailwind.config = {
             theme: {

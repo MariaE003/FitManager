@@ -36,6 +36,8 @@ if (isset($_POST['login'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../style/style.css">
+    <!-- <link href="../src/output.css" rel="stylesheet"> -->
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -69,7 +71,7 @@ if (isset($_POST['login'])) {
                         <input type="text" placeholder="EX : hT POt"  name="password"
                             class="px-3 py-3 border-2 border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary">
                     </div>
-                    <div id="toast-error">tout les champ sont obligatoire</div>
+                    <div id="toast-error"></div>
 
                 </div>
                 <div class="mt-6 text-right">
@@ -92,6 +94,7 @@ if (isset($_POST['login'])) {
 <script>
     function toast(){
         let div=document.querySelector('#toast-error');
+        div.innerHTML="tout les champ sont obligatoire";
         div.className='show';
         setTimeout(function(){
             div.className=div.className.replace('show','');
@@ -100,6 +103,20 @@ if (isset($_POST['login'])) {
     toast();
 </script>
 <?php
+    }else{
+        ?>
+            <script>
+    function toast(){
+        let div=document.querySelector('#toast-error');
+        div.innerHTML="email ou mot de pass invalide";
+        div.className='show';
+        setTimeout(function(){
+            div.className=div.className.replace('show','');
+        },3000);
+    }    
+    toast();
+</script>
+        <?php
     }
 ?>
     </body>
