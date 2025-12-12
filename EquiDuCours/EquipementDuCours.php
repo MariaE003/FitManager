@@ -1,6 +1,6 @@
 <?php
-require './connect.php';
-require './nav.php';
+require '../connect.php';
+require '../nav.php';
 $idCours=$_GET["idCours"];
 $sql="SELECT e.* FROM cours c INNER JOIN cours_equipements ce on c.id=ce.idC
 INNER JOIN equipements e ON e.id=ce.idE WHERE c.id='$idCours'";

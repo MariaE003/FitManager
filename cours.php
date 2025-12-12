@@ -127,7 +127,7 @@ require "connect.php";
                                         <td class="px-4 py-4 text-gray-600"><?php echo $cours["nombreMaxParticipants"] ?></td>
                                         <td class="px-4 py-4">
                                             <div class="flex gap-2">
-                                                    <a href="./EquipementDuCours.php?idCours=<?php echo $cours['id']?>" name="modifierCours" class="px-4 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition voirEquipement">voir equipements</a>
+                                                    <a href="./EquiDuCours/EquipementDuCours.php?idCours=<?php echo $cours['id']?>" name="modifierCours" class="px-4 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition voirEquipement">voir equipements</a>
                                                     <a href="./cours/edit.php?idEditCours=<?php echo $cours['id']?>" name="modifierCours" class="px-4 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition modifierCours">Modifier</a>
                                                     <a href="./cours/delete.php?id=<?php echo $cours['id']?>" class="px-4 py-1 bg-red-500 text-white rounded-lg hover:bg-red-400 transition supprimerCours">Supprimer</a>
 
